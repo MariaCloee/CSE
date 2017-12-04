@@ -102,7 +102,7 @@ while a < 10:
 
 response = ""
 while response != "Hello":  # ! = not
-    response = input("Say \\ \"Hello\"")   # \\ 2 of these = print the actual \ on the program
+    response = input("Say \"Hello\"")   # \\ 2 of these = print the actual \ on the program
 
 print("Hello \nWorld")   # \n means newline
 
