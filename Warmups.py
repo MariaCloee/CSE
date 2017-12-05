@@ -21,16 +21,21 @@
 #     last_name = input("What is your last name? ")
 #     print("%s %s" % (last_name, first_name))
 
+
+def happy_bday():
+    name1 = input("What is your name? ")
+    print("Happy Birthday to You!. Happy Birthday to You! Happy Birthday Dear %s! Happy Birthday to You!" % name1)
+
+happy_bday()
+
 #
-# def happy_bday():
-#     name1 = input("What is your name? ")
-#     print("Happy Birthday to You!. Happy Birthday to You! Happy Birthday Dear %s! Happy Birthday to You!" % name1)
+# def happy_bday(name):
+#     print("Happy Birthday to You!. Happy Birthday to You!")
+#     print("Happy Birthday Dear" + name)
+#     print("Happy Birthday to You!")
+
 #
-# happy_bday()
-
-
-def happy_bday(name):
-    print("Happy Birthday to You!. Happy Birthday to You!")
-    print("Happy Birthday Dear" + name)
-    print("Happy Birthday to You!")
-
+# def add_py(name):
+#     print("Hello %s.py" % name)
+#
+# add_py(name= )

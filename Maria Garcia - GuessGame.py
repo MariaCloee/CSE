@@ -1,16 +1,23 @@
 import random
 # Maria Garcia
 
-print(random.randint(1, 50))
-
-num = random.randint
-
-num1 = input("Guess what number I am thinking of from 1-50? ")
+num = random.randint(1, 50)  # 50
+print(num)
 
 
 response = ""
 while response != num:
-    response = input("Guess what number I am thinking of from 1-50?)
+    response = int(input("Guess what number I am thinking of from 1-50? "))
+
+
+num1 = int(input("Guess what number I am thinking of from 1-50? "))  #
+if num1 == num:
+    print("YOU DID IT!")
+elif num1 < num:
+    print("higher")
+elif num1 > num:
+    print("lower")
+
 
 # In order:
 # Generate a number
