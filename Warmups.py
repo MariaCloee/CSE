@@ -21,12 +21,12 @@
 #     last_name = input("What is your last name? ")
 #     print("%s %s" % (last_name, first_name))
 
-
-def happy_bday():
-    name1 = input("What is your name? ")
-    print("Happy Birthday to You!. Happy Birthday to You! Happy Birthday Dear %s! Happy Birthday to You!" % name1)
-
-happy_bday()
+#
+# def happy_bday(name1):
+#     print("Happy Birthday to You!. Happy Birthday to You! Happy Birthday Dear %s! Happy Birthday to You!" % name1)
+#
+#
+# happy_bday("JOHN")
 
 #
 # def happy_bday(name):
@@ -39,3 +39,11 @@ happy_bday()
 #     print("Hello %s.py" % name)
 #
 # add_py(name= )
+
+
+# this is 2 (num1, num2) and this is one (num1) and this is 0 ()
+def add(num1, num2, num3):  # these are 3 parameters (num1, num2, num3)
+    print(num1 + num2 + num3)
+
+
+add(90, 900, 9000)
