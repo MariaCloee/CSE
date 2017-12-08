@@ -51,13 +51,28 @@
 
 # 12/7/17
 
-def repeat(string):
-    print(string)
-    print(string)
-    print(string)
+# def repeat(string):
+#     print(string)
+#     print(string)
+#     print(string)
+#
+#     for x in range(3):
+#         print(string)
+#
+#
+# repeat("Hello")
 
-    for x in range(3):
-        print(string)
+# Easy:
+def date(month, day, year):
+    print(month + "/" + day + "/" + year)
 
 
-repeat("Hello")
+date("12", "8", "17")
+
+
+# Expert:
+def date(month, day, year):
+    print(str(month) + "/" + str(day) + "/" + str(year))
+
+
+date(12, 8, 17)
