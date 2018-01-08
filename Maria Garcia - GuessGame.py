@@ -1,11 +1,13 @@
 import random
 # Maria Garcia
 
+#  Initializing Variables
 num = random.randint(1, 50)  # 50
 
 turns_left = 5
 right_guess = False
 
+#  Describes exactly ONE turn. The while loop is the Game Controller.
 while turns_left > 0 and right_guess is False:
     num1 = int(input("Guess what number I am thinking of from 1-50? "))
     if num1 == num:
