@@ -159,5 +159,29 @@ listOne[11] = '.'
 print(listOne)
 newStr = "".join(listOne)
 print(newStr)
+print(listOne[-5])
 
-#
+# adding stuff to a list
+characters.append("Iron man/Batman/whomever you want")
+print(characters)
+
+characters.append("Nemo")
+print(characters)
+
+# removing things from a list
+characters.remove("Carl")
+print(characters)
+
+characters.pop(6)
+print(characters)
+
+# the string class
+import string
+print(string.ascii_letters)
+print(string.ascii_letters)
+print(string.digits)
+print(string.punctuation)
+
+strTwo = 'ThIs sEntENcE iS uNuSuAL'
+lowercase = strTwo.lower()
+print(lowercase)
