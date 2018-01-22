@@ -9,13 +9,21 @@ Outline of Hangman
 """
 import random
 
+letters_guessed = []
 turns_left = 10
 word_bank = ["seal", "puppy", "hamster", "horse", "monkey", "dog", "unicorn", "red wolf", "duck", "whales", "cat"]
 a_word = random.randint(0, 10)
-print(word_bank[a_word])
+chosen = word_bank[a_word]
 
-str1 = (word_bank[a_word])
-listOne = list(str1)
-print(listOne)
-listOne = "*"
+list_one = list(chosen)
+print(list_one)
+letters = word_bank[a_word]
+# each turn
+hashed_word = []
+if letters != letters_guessed:
+
+
+print(''.join(list_one))  # prints out the list for the user
+
+
 
