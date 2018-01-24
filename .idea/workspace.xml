@@ -14,7 +14,7 @@
       <file leaf-file-name="Warmups.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Warmups.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1326">
+            <state relative-caret-position="0">
               <caret line="78" column="0" lean-forward="false" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
               <folding />
             </state>
@@ -24,7 +24,7 @@
       <file leaf-file-name="Maria Garcia - GuessGame.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Maria Garcia - GuessGame.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="28">
+            <state relative-caret-position="193">
               <caret line="14" column="26" lean-forward="false" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
               <folding />
             </state>
@@ -44,7 +44,7 @@
       <file leaf-file-name="BlackJack.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BlackJack.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="731">
+            <state relative-caret-position="236">
               <caret line="44" column="19" lean-forward="false" selection-start-line="44" selection-start-column="19" selection-end-line="44" selection-end-column="19" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -56,8 +56,8 @@
       <file leaf-file-name="Notes.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Notes.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="187" column="0" lean-forward="true" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
+            <state relative-caret-position="-780">
+              <caret line="124" column="12" lean-forward="false" selection-start-line="124" selection-start-column="10" selection-end-line="124" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -66,8 +66,8 @@
       <file leaf-file-name="Maria Garcia - Hangman.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Maria Garcia - Hangman.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="38" column="33" lean-forward="true" selection-start-line="32" selection-start-column="4" selection-end-line="38" selection-end-column="33" />
+            <state relative-caret-position="177">
+              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
               <folding>
                 <element signature="e#234#247#0" expanded="true" />
               </folding>
@@ -91,6 +91,7 @@
       <find>highestmoney</find>
       <find>+</find>
       <find>You Lost!</find>
+      <find>==</find>
     </findStrings>
     <replaceStrings>
       <replace>maxmoneyround</replace>
@@ -145,8 +146,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -308,19 +309,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Notes.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="54" column="10" lean-forward="false" selection-start-line="54" selection-start-column="9" selection-end-line="54" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BlackJack.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
@@ -671,7 +664,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Warmups.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1326">
+        <state relative-caret-position="0">
           <caret line="78" column="0" lean-forward="false" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
           <folding />
         </state>
@@ -684,9 +677,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Lucky_7.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/BlackJack.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
+        <state relative-caret-position="236">
           <caret line="44" column="19" lean-forward="false" selection-start-line="44" selection-start-column="19" selection-end-line="44" selection-end-column="19" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
@@ -696,32 +697,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Maria Garcia - GuessGame.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
+        <state relative-caret-position="193">
           <caret line="14" column="26" lean-forward="false" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Lucky_7.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="10" lean-forward="false" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Notes.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="187" column="0" lean-forward="true" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
+        <state relative-caret-position="-780">
+          <caret line="124" column="12" lean-forward="false" selection-start-line="124" selection-start-column="10" selection-end-line="124" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/Program Files/Python36/Lib/string.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="147">
+          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Maria Garcia - Hangman.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="38" column="33" lean-forward="true" selection-start-line="32" selection-start-column="4" selection-end-line="38" selection-end-column="33" />
+        <state relative-caret-position="177">
+          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="e#234#247#0" expanded="true" />
           </folding>
