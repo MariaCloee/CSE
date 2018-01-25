@@ -41,13 +41,15 @@ while turns_left > 0:
 
     if list_form == correct_letters:
         print("Good Job! You guessed it!")
+        print("You got %d points." % points)
         exit(0)
     print("You have %d points." % points)
     guess = input("Guess a letter ").lower()
     if guess == 'quit':
+        print("The word was: %s." % chosen)
         exit(0)
     letters_guessed.append(guess)
-    if guess in chosen:
+    if guess in chosen.lower():
         points += 1
         print("YAY! You got it right!")
     else:
