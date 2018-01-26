@@ -49,6 +49,8 @@ while turns_left > 0:
         print("The word was: %s." % chosen)
         exit(0)
     letters_guessed.append(guess)
+    if guess == "":
+        print("You have to guess something!")
     if guess in chosen.lower():
         points += 1
         print("YAY! You got it right!")
