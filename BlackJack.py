@@ -35,20 +35,22 @@ while answer != "no":
         print("You got a %d" % hit_card)
         print("Your total is %d" % player_total)
         if player_total == 21:
-            print("You Win!")
+            print("You got a perfect 21!")
             sys.exit()
         if player_total > 21:
-            print("You Lost!")
+            print("You got over 21! You lost!")
             sys.exit()
 if answer == "no":
-    answer = "yes"
-    while answer != "yes" and dealers_total < 17:
-        answer = input("Dealers turn: 17 or higher. Do you want another card?")
-    while answer == "yes" and dealers_total < 17:
+    answer = ""
+    while answer != "no" and dealers_total < 17:
+        answer = input("Now it is the Dealer's turn. You must get over 17. Do you want another card?")
+        print("YOU HAVE TO SAY YES BECAUSE YOU HAVE GREATER THAN 17!")
+        answer = input("Now it is the Dealer's turn. You must get over 17. Do you want another card?")
+    while answer == "yes":
         answer = input("Now it is the Dealer's turn. You must get over 17. Do you want another card?")
         hit_card = draw_card()
         dealers_total += hit_card
-        print("You got a %d" % hit_card)
+        print("Dealer got a %d" % hit_card)
         print("Dealer's total is %d" % dealers_total)
         if dealers_total == 21:
             print("You Lost!")
@@ -56,21 +58,20 @@ if answer == "no":
         if dealers_total > 21:
             print("You Win!")
             sys.exit()
-        answer = input("Now it is the Dealer's turn. You must get over 17. Do you want another card?")
     while answer == "no" and dealers_total >= 17:
         if player_total == 21:
-            print("You Win!")
+            print("You got a perfect 21! You Win!")
             sys.exit()
         if player_total < 21:
             if player_total < dealers_total <= 21:
-                print("You Lost!")
+                print("You got %d, but Dealer got %d. You Lost!" % (player_total, dealers_total))
                 sys.exit()
             if player_total > dealers_total <= 21:
-                print("You Win!")
+                print("Dealer got %d, but you got %d. You Won!" % (dealers_total, player_total))
                 sys.exit()
             if dealers_total == 21:
-                print("You Lost!")
+                print("Dealer got a perfect 21! You Lost!")
                 sys.exit()
         if player_total > 21:
-            print("You Lost!")
+            print("You got over 21. You Lost!")
             sys.exit()
