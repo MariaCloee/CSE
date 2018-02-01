@@ -9,16 +9,21 @@ while level != "easy" and level != "hard":
     level = input("Do you want easy or hard level? ")
 
 # Assume hard mode
-word_bank = [
-    "moral", "peace", "grand", "will", "meal", "cart", "lamb", "free", "loose", "interrupt",
-    "colleague", "unanimous", "dynamic", "crack", "stress", "wording", "feather", "teach", "band", "won't"]
-turns_left = 5
-
+if level == "hard":
+    word_bank = [
+        "moral", "peace", "grand", "will", "meal", "cart", "lamb", "free", "loose", "interrupt",
+        "colleague", "unanimous", "dynamic", "crack", "stress", "wording", "feather", "teach", "band", "won't"]
+    turns_left = 5
+    print("You have 5 tries to guess this word. Good Luck. ")
+    print("If you can't do it, type 'quit' to stop.")
 # Override if easy
 if level == "easy":
+
     turns_left = 10
     word_bank = [
         "Seal", "Puppy", "Hamster", "Horse", "Monkey", "Dog", "Unicorn", "Red wolf", "Duck", "Whales", "Cat"]
+    print("You have 10 tries to guess this word. Good Luck. ")
+    print("If you can't do it, type 'quit' to stop.")
 # Start Game
 letters_guessed = [' ', "'"]
 a_word = random.randint(0, 10)
@@ -30,8 +35,6 @@ letter = string.ascii_letters
 letters = string.punctuation
 
 # each turn
-print("You have 5 tries to guess this word. Good Luck. ")
-print("If you can't do it, type 'quit' to stop.")
 
 while turns_left > 0:
     list_form = []
