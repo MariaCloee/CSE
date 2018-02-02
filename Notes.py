@@ -256,4 +256,3 @@ largest_dictionary = {
 print(largest_dictionary["MI"]["BORDER ST"][1])
 print(largest_dictionary["FL"]["NAME"])
 print(largest_dictionary["MI"]["NAME"])
-
