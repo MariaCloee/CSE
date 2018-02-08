@@ -195,6 +195,13 @@ print(dictionary['name'])
 print(dictionary['age'])
 print(dictionary['height'])
 
+
+# Adding to a dictionary
+dictionary["eye colour"] = "blue"
+dictionary["toilet paper"] = True
+print(dictionary)
+
+
 large_dictionary = {
     "California": "CA",
     "Michigan": "MI",
