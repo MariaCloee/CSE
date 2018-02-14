@@ -1,8 +1,8 @@
-world_map = {
+moana_map = {
     'MOANA_HOUSE': {
         'NAME': "Moana's House",
         'DESCRIPTION': 'This place is where Moana lives with her family and there are 4 exits: to the west there is'
-                       'a path, to the east is where grandma lives, north is the ocean shore, and south is a path.',
+                       ' a path, \nto the east is where grandma lives, north is the ocean shore, and south is a path.',
         'PATHS': {
             'NORTH': 'OCEAN_SHORE',
             'SOUTH': 'CHIEF_STONES',
@@ -51,9 +51,9 @@ world_map = {
     },
     'OTHER_OCEAN_SHORE': {
         'NAME': "The Other Ocean Shore",
-        'DESCRIPTION': ' It is other ocean shore with the waterfall to the north and a path to the east.',
+        'DESCRIPTION': ' It is other ocean shore with the waterfall a path to the east.',
         'PATHS': {
-            'NORTH': 'WATERFALL',
+            # 'NORTH': 'WATERFALL',
             'EAST': 'PALM TREES'
         }
     },
@@ -76,10 +76,10 @@ world_map = {
     },
     'OCEAN_SHORE': {
         'NAME': "Ocean Shore",
-        'DESCRIPTION': 'You are in the middle of the ocean. There are 4 directions: west, north, east, and back south.'
-                       'I suggested to not go east until you find Mali. ',
+        'DESCRIPTION': 'You are in the middle of the ocean. There are 4 directions: north, east, and back south.'
+                       '\nI suggested to not go east until you find Mali. ',
         'PATHS': {
-            'WEST': 'HIDDEN_CAVE',
+            # 'WEST': 'HIDDEN_CAVE',
             'EAST': 'FISHING_AREA',
             'SOUTH': "MOANA_HOUSE",
             'NORTH': 'INTO_OCEAN'
@@ -96,15 +96,38 @@ world_map = {
     },
     'INTO_OCEAN': {
         'NAME': "Into the Ocean",
-        'DESCRIPTION': 'This is where there are fishing nets and 2 paths to the west and to the east. '
-                       'Also, there are some boats with paddles.',
+        'DESCRIPTION': 'You are in the middle of the ocean. There are 4 directions: west, north, east, and back south.'
+                       '\nI suggested to not go east until you find Mali.',
         'PATHS': {
-            'WEST': 'WATERFALL',
-            'SOUTHEAST': "VILLAGER_HOMES"
+            'WEST': 'ISLAND',
+            'SOUTH': "OCEAN_SHORE",
+            'EAST': 'TACA',
+            'NORTH': "RILM_OF_MONSTER"
+
         }
     },
 
 }
+
+current_node = moana_map['MOANA_HOUSE']
+directions = ['NORTH', 'SOUTH', 'EAST', 'WEST', 'SOUTHEAST', 'NORTHEAST', 'SOUTHWEST', 'NORTHWEST']
+
+while True:
+    print(current_node["NAME"])
+    print(current_node['DESCRIPTION'])
+    command = input('>_')
+    if command == 'quit':
+        quit(0)
+    if command in directions:
+        try:
+            name_of_node = current_node['PATHS'][command]
+            current_node = moana_map[name_of_node]
+        except KeyError:
+            print("You cannot go that way. ")
+    else:
+        print("Command not recognize.")
+    print()
+
 
 # current_node = world_map['WESTHOUSE']
 # print(current_node['DESCRIPTION'])
