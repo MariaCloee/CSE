@@ -14,7 +14,7 @@ moana_map = {
     'CHIEF_STONES': {
         'NAME': 'Chief’s stones mountain',
         'DESCRIPTION': 'You have arrived to a sacred place only for chiefs. '
-                       'There is only a pile of stones and paths to the north and northwest and northeast.',
+                       '\nThere is only a pile of stones and paths to the north and northwest and northeast.',
         'PATHS': {
             'NORTH': 'MOANA_HOUSE',
             'SOUTH': 'CHIEF_STONES',
@@ -41,8 +41,8 @@ moana_map = {
     'PALM_TREES': {
         'NAME': "Palm Trees",
         'DESCRIPTION': 'You are surrounded by palm trees with coconuts. There is a tree to your left that has a low '
-                       'branch and only one coconut. There are 4 paths: west to ocean shore, east is a path, southeast '
-                       'is a path up the mountain, and north is a block by rocks.',
+                       '\nbranch and only one coconut. There are 4 paths: west to ocean shore, east is a path,\n '
+                       'southeast is a path up the mountain, and north is a block by rocks.',
         'PATHS': {
             'WEST': 'OTHER_OCEAN_SHORE',
             'EAST': 'MOANA_HOUSE',
@@ -60,7 +60,7 @@ moana_map = {
     'WATERFALL': {
         'NAME': "Waterfall",
         'DESCRIPTION': ' There is a waterfall leading to the other ocean shore to the south.  '
-                       'Also, there is a path back east. Also, there are some boats. ',
+                       '\nAlso, there is a path back east. Also, there are some boats. ',
         'PATHS': {
             'SOUTH': 'OTHER_OCEAN_SHORE',
             'EAST': 'HIDDEN_CAVE'
@@ -88,7 +88,7 @@ moana_map = {
     'FISHING_AREA': {
         'NAME': "Fishing Area",
         'DESCRIPTION': 'This is where there are fishing nets and 2 paths to the west and to the east. '
-                       'Also, there are some boats with paddles.',
+                       '\nAlso, there are some boats with paddles.',
         'PATHS': {
             'WEST': 'WATERFALL',
             'SOUTHEAST': "VILLAGER_HOMES"
@@ -106,7 +106,81 @@ moana_map = {
 
         }
     },
+    'ISLAND': {
+        'NAME': "A Mystery Island",
+        'DESCRIPTION': 'You will find Mali on this island and you can go to the west and back to the east.',
+        'PATHS': {
+            'WEST': 'BIG_CAVE',
+            'EAST': 'INTO_OCEAN'
 
+        }
+    },
+    'BIG_CAVE': {
+        'NAME': "A BIG Cave",
+        'DESCRIPTION': 'There is a cave with no doors and an exit back to the east; where you came from.',
+        'PATHS': {
+            'EAST': 'ISLAND'
+
+        }
+    },
+    'TACA': {
+        'NAME': "TACA",
+        'DESCRIPTION': 'Taca is the new enemy. How can you defeat Taca? Figure it out! '
+                       '\nThere is an exit back west and you can go west but you must defeat Taca.',
+        'PATHS': {
+            'EAST': 'TE_FIT',
+            'WEST': 'INTO_OCEAN'
+
+        }
+    },
+    'TE_FIT': {
+        'NAME': "An Island with Te Fit",
+        'DESCRIPTION': 'You defeated Taca. Congrats. You completed the game.',
+        'PATHS': {
+            'WEST': 'TACA'
+
+        }
+    },
+    'RILM_OF_MONSTER': {
+        'NAME': "Rilm of Monster",
+        'DESCRIPTION': 'There are monsters here. To the east is the Crab Layer '
+                       '\nand to the west is the Mission and back south.',
+        'PATHS': {
+            'WEST': 'MISSON',
+            'EAST': 'CRAB_LAYER',
+            'SOUTH': 'INTO_OCEAN'
+
+        }
+    },
+    'MISSON': {
+        'NAME': "The Mission",
+        'DESCRIPTION': 'Here you will find Mail’s hook here to your right is a note '
+                       '\nand to your northwest is a path and a path back to the east.',
+        'PATHS': {
+            'NORTHWEST': 'MALI_HOOK',
+            'EAST': 'RILM_OF_MONSTER'
+
+        }
+    },
+    'MAIL_HOOK': {
+        'NAME': "Mail's Hook Room",
+        'DESCRIPTION': 'You found Mali’s hook, but first you have to out the shell in the hole'
+                       '\n with the shell hole to get the hook. '
+                       '\nYou can go back to southeast to go back to the Mission.',
+        'PATHS': {
+            'SOUTHEAST': 'MISSION'
+
+        }
+    },
+    'CRAB_LAYER': {
+        'NAME': "Crab's Layer",
+        'DESCRIPTION': 'You are in the crab’s layer. If you don’t leave, you will died. '
+                       '\nThe only exit is back to the west.',
+        'PATHS': {
+            'WEST': 'RILM_OF_MONSTER'
+
+        }
+    }
 }
 
 current_node = moana_map['MOANA_HOUSE']
