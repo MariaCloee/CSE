@@ -7,7 +7,7 @@ moana_map = {
             'NORTH': 'OCEAN_SHORE',
             'SOUTH': 'CHIEF_STONES',
             'WEST': 'PALM_TREES',
-            'EAST': 'GRANDMA_HOME'
+            'EAST': 'GRANDMA_HOUSE'
 
         }
     },
@@ -17,9 +17,8 @@ moana_map = {
                        '\nThere is only a pile of stones and paths to the north and northwest and northeast.',
         'PATHS': {
             'NORTH': 'MOANA_HOUSE',
-            'SOUTH': 'CHIEF_STONES',
             'NORTHWEST': 'PALM_TREES',
-            'NORTHEAST': 'GRANDMA_HOME'
+            'NORTHEAST': 'GRANDMA_HOUSE'
         }
     },
     'GRANDMA_HOUSE':  {
@@ -27,7 +26,16 @@ moana_map = {
         'DESCRIPTION': 'Grandma lives and there are 3 exits: west, southwest and east.',
         'PATHS': {
             'WEST': 'MOANA_HOUSE',
-            'EAST': 'VILLAGER_HOMES'
+            'EAST': 'VILLAGER_HOMES',
+            'DOWN': 'CELLAR',
+            'SOUTHWEST': 'CHIEF_STONES'
+        }
+    },
+    'CELLAR': {
+        'NAME': 'Cellar',
+        'DESCRIPTION': 'There is a treasure chest.',
+        'PATHS': {
+            'UP': 'GRANDMA_HOUSE'
         }
     },
     'VILLAGER_HOMES': {
@@ -42,7 +50,7 @@ moana_map = {
         'NAME': "Palm Trees",
         'DESCRIPTION': 'You are surrounded by palm trees with coconuts. There is a tree to your left that has a low '
                        '\nbranch and only one coconut. There are 4 paths: west to ocean shore, east is a path,\n '
-                       'southeast is a path up the mountain, and north is a block by rocks.',
+                       'southeast is a path up the mountain, and north is a block by rocks that are not movable.',
         'PATHS': {
             'WEST': 'OTHER_OCEAN_SHORE',
             'EAST': 'MOANA_HOUSE',
@@ -51,7 +59,8 @@ moana_map = {
     },
     'OTHER_OCEAN_SHORE': {
         'NAME': "The Other Ocean Shore",
-        'DESCRIPTION': ' It is other ocean shore with the waterfall a path to the east.',
+        'DESCRIPTION': ' It is other ocean shore with the waterfall a path to the east,'
+                       '\n and a path to the north that is blocked by a door.',
         'PATHS': {
             # 'NORTH': 'WATERFALL',
             'EAST': 'PALM TREES'
@@ -76,7 +85,8 @@ moana_map = {
     },
     'OCEAN_SHORE': {
         'NAME': "Ocean Shore",
-        'DESCRIPTION': 'You are in the middle of the ocean. There are 4 directions: north, east, and back south.'
+        'DESCRIPTION': 'You are in the middle of the ocean. There are 4 directions: north, east,'
+                       '\n west - is blocked by a door - and back south.'
                        '\nI suggested to not go east until you find Mali. ',
         'PATHS': {
             # 'WEST': 'HIDDEN_CAVE',
@@ -126,9 +136,9 @@ moana_map = {
     'TACA': {
         'NAME': "TACA",
         'DESCRIPTION': 'Taca is the new enemy. How can you defeat Taca? Figure it out! '
-                       '\nThere is an exit back west and you can go west but you must defeat Taca.',
+                       '\nThere is an exit back west and you can go east but you must defeat Taca.',
         'PATHS': {
-            'EAST': 'TE_FIT',
+            # 'EAST': 'TE_FIT',
             'WEST': 'INTO_OCEAN'
 
         }
@@ -184,15 +194,15 @@ moana_map = {
 }
 
 current_node = moana_map['MOANA_HOUSE']
-directions = ['NORTH', 'SOUTH', 'EAST', 'WEST', 'SOUTHEAST', 'NORTHEAST', 'SOUTHWEST', 'NORTHWEST']
+directions = ['NORTH', 'SOUTH', 'EAST', 'WEST', 'SOUTHEAST', 'NORTHEAST', 'SOUTHWEST', 'NORTHWEST', 'DOWN', 'UP']
 
 while True:
     print(current_node["NAME"])
     print(current_node['DESCRIPTION'])
-    command = input('>_')
-    if command == 'quit':
+    command = input('>_').strip().upper()
+    if command == 'QUIT':
         quit(0)
-    if command in directions:
+    elif command in directions:
         try:
             name_of_node = current_node['PATHS'][command]
             current_node = moana_map[name_of_node]
@@ -200,10 +210,3 @@ while True:
             print("You cannot go that way. ")
     else:
         print("Command not recognize.")
-    print()
-
-
-# current_node = world_map['WESTHOUSE']
-# print(current_node['DESCRIPTION'])
-# 15 rooms at least
-# Have title, descriptions, and paths
