@@ -130,58 +130,136 @@
 #
 
 # Lists
-
-the_count = [1, 2, 3, 4, 5]
-characters = ["graves", "Dory", "Boots", "Dora", "Shrek", "Obi-wan", "Carl"]
-print(characters[0])
-print(characters[4])
-
-print(len(characters))   # Gives you the length of the list
-
-#  Going through Lists
-for char in characters:
-    print(char)
-for cou in the_count:
-    print(cou**2)
-
-len(characters)
-range(3)     # Make a list of the numbers from 0 to 2
-range(len(characters))  # Makes a list of ALL INDICES
-
-for num in range(len(characters)):
-    char = characters[num]
-    print("The character at index %d is %s." % (num, char))
-
-str1 = "Hello World!"
-listOne = list(str1)
-print(listOne)
-listOne[11] = '.'
-print(listOne)
-newStr = "".join(listOne)
-print(newStr)
-print(listOne[-5])
-
-# adding stuff to a list
-characters.append("Iron man/Batman/whomever you want")
-print(characters)
-
-characters.append("Nemo")
-print(characters)
-
-# removing things from a list
-characters.remove("Carl")
-print(characters)
-
-characters.pop(6)
-print(characters)
+#
+# the_count = [1, 2, 3, 4, 5]
+# characters = ["graves", "Dory", "Boots", "Dora", "Shrek", "Obi-wan", "Carl"]
+# print(characters[0])
+# print(characters[4])
+#
+# print(len(characters))   # Gives you the length of the list
+#
+# #  Going through Lists
+# for char in characters:
+#     print(char)
+# for cou in the_count:
+#     print(cou**2)
+#
+# len(characters)
+# range(3)     # Make a list of the numbers from 0 to 2
+# range(len(characters))  # Makes a list of ALL INDICES
+#
+# for num in range(len(characters)):
+#     char = characters[num]
+#     print("The character at index %d is %s." % (num, char))
+#
+# str1 = "Hello World!"
+# listOne = list(str1)
+# print(listOne)
+# listOne[11] = '.'
+# print(listOne)
+# newStr = "".join(listOne)
+# print(newStr)
+# print(listOne[-5])
+#
+# # adding stuff to a list
+# characters.append("Iron man/Batman/whomever you want")
+# print(characters)
+#
+# characters.append("Nemo")
+# print(characters)
+#
+# # removing things from a list
+# characters.remove("Carl")
+# print(characters)
+#
+# characters.pop(6)
+# print(characters)
 
 # the string class
-import string
-print(string.ascii_letters)
-print(string.ascii_letters)
-print(string.digits)
-print(string.punctuation)
+# import string
+# print(string.ascii_letters)
+# print(string.ascii_letters)
+# print(string.digits)
+# print(string.punctuation)
+#
+# strTwo = 'ThIs sEntENcE iS uNuSuAL'
+# lowercase = strTwo.lower()
+# print(lowercase)
+#
 
-strTwo = 'ThIs sEntENcE iS uNuSuAL'
-lowercase = strTwo.lower()
-print(lowercase)
+# Dictionaries - Make upi a key: value pair
+dictionary = {'name': 'Lance', 'age': 18, 'height': 6 * 12 + 2}
+
+# Accessing from a dictionary
+print(dictionary['name'])
+print(dictionary['age'])
+print(dictionary['height'])
+
+
+# Adding to a dictionary
+dictionary["eye colour"] = "blue"
+dictionary["toilet paper"] = True
+print(dictionary)
+
+
+large_dictionary = {
+    "California": "CA",
+    "Michigan": "MI",
+    "Florida": "FL"
+}
+print(large_dictionary["Florida"])
+
+larger_dictionary = {
+    "California": [
+        "Fresno",
+        "Sacramento",
+        "Los Angles"
+    ],
+    "Washington": [
+        "Seattle",
+        "Tacoma",
+        "Olympia",
+        "Spokane"
+    ],
+    "Illinois": [
+        "Chicago",
+        "Naperville",
+        "Peoria"
+    ]
+}
+
+print(larger_dictionary["Illinois"])
+print(larger_dictionary["Illinois"][0])
+print(larger_dictionary["Washington"][3])
+
+largest_dictionary = {
+    "CA": {
+        'NAME': 'California',
+        'POPULATION': 39250000,
+        'BORDER ST': [
+            'Oregon',
+            "Nevada",
+            "Arizona"
+        ]
+    },
+    "MI": {
+        "NAME": "Michigan",
+        "POPULATION": 9928000,
+        "BORDER ST": [
+            'Wisconsin',
+            'Ohio',
+            "Indiana"
+        ]
+    },
+    "FL": {
+        "NAME": "Florida",
+        "POPULATION": 20610000,
+        "BORDER ST": [
+            'Georgia',
+            'Alabama'
+        ]
+    }
+}
+print(largest_dictionary["MI"]["BORDER ST"][1])
+print(largest_dictionary["FL"]["NAME"])
+print(largest_dictionary["MI"]["NAME"])
