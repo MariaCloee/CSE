@@ -196,6 +196,7 @@ moana_map = {
 current_node = moana_map['MOANA_HOUSE']
 directions = ['NORTH', 'SOUTH', 'EAST', 'WEST', 'SOUTHEAST', 'NORTHEAST', 'SOUTHWEST', 'NORTHWEST', 'DOWN', 'UP']
 
+
 while True:
     print(current_node["NAME"])
     print(current_node['DESCRIPTION'])
