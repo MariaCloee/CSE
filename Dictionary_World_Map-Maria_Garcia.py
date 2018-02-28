@@ -147,7 +147,7 @@ moana_map = {
         'NAME': "An Island with Te Fit",
         'DESCRIPTION': 'You defeated Taca. Congrats. You completed the game.',
         'PATHS': {
-            'WEST': 'TACA'
+            # 'WEST': 'TACA'
 
         }
     },
