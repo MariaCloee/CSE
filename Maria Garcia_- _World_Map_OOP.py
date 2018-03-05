@@ -86,7 +86,7 @@ crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, Non
 
 current_node = moana_house
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
-
+short_directions = ['n', 's', 'e', 'w', 'd', 'u', 'ne', 'nw', 'se', 'sw']
 
 while True:
     print(current_node.name)
@@ -94,7 +94,10 @@ while True:
     command = input('>_').strip().lower()
     if command == 'quit':
         quit(0)
-    elif command in directions:
+    elif command in short_directions:
+        pos = short_directions.index(command)
+        command = directions[pos]
+    if command in directions:
         try:
             current_node.move(command)
         except KeyError:
