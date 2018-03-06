@@ -19,8 +19,23 @@ class Room(object):
         current_node = globals()[getattr(self, direction)]
 
 
+class Characters(object):
+    def __init__(self, name, move, inventory, clothes, take, drop, look, read, climb, fight):
+        self.name = name
+        self.move = move
+        self.inventory = inventory
+        self.clothes = clothes
+        self.take = take
+        self.drop = drop
+        self.look = look
+        self.read = read
+        self.climb = climb
+        self.fight = fight
+
+
 # west_house = Room("West of House", "north_house")
 # north_house = Room("North of House", None)
+
 moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_house', 'palm_trees', None, None, None,
                    None, None, None, 'This place is where Moana lives with her family and there are 4 exits: to the '
                                      'west there is a path, \nto the east is where grandma lives, north is the '
@@ -67,8 +82,9 @@ big_cave = Room("A BIG Cave", None, None, 'island', None, None, None, None, None
 taca = Room("Taca", None, None, None, 'into_ocean', None, None, None, None, None, None, 'Taca is the new enemy. '
             'How can you defeat Taca? Figure it out! '
             '\nThere is an exit back west and you can go east but you must defeat Taca.')
-te_fit = Room("An Island with Te Fit", None, None, None, None, None, None, None, None, None, None,
-              'You defeated Taca. Congrats. You completed the game.')
+te_fiti = Room("An Island with Te Fit", None, None, None, None, None, None, None, None, None, None,
+               'You defeated Taca.'
+               ' Congrats. You completed the game.')
 rilm_of_monster = Room("Rilm of Monsters", None, 'into_ocean', 'crab_layer', 'mission', None, None, None, None, None,
                        None, 'There are monsters here. To the east is the Crab Layer '
                        '\nand to the west is the Mission and back south.')
@@ -87,6 +103,13 @@ crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, Non
 current_node = moana_house
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
 short_directions = ['n', 's', 'e', 'w', 'd', 'u', 'ne', 'nw', 'se', 'sw']
+
+
+characters = ['Moana', 'Mali', 'Grandma', 'Mom', 'Dad']
+
+character_choosing = input('Which character do you?').lower
+if input == characters:
+    print("You are %s." % character_choosing)
 
 while True:
     print(current_node.name)
