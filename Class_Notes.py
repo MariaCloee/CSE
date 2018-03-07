@@ -70,3 +70,6 @@ my_car = Car("blue", "red", "subaru", 5)
 my_car.turn_on()
 my_car.move_forward()
 my_car.turn_off()
+
+# do = method
+# has = init

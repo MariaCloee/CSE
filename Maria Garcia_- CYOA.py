@@ -1,6 +1,6 @@
 class Room(object):
     def __init__(self, name, north, south, east, west, down, up, northeast, northwest, southeast, southwest,
-                 description):
+                 description, characters=None):
         self.name = name
         self.north = north
         self.south = south
@@ -13,14 +13,33 @@ class Room(object):
         self.northwest = northwest
         self.southeast = southeast
         self.description = description
+        self.characters = characters
+
+
+class Character(object):
+    def __init__(self, name, description, health, state, location):
+        self.name = name
+        self.inventory = []
+        self.description = description
+        self.health = health
+        self.state = state
+        self.location = location  # Must be a Room
+
+    def take(self, item):
+        self.inventory.append(item)
+
+    def drop(self, item):
+        self.inventory.remove(item)
+
+    def look(self):
+        print(self.location.name)
 
     def move(self, direction):
-        global current_node
-        current_node = globals()[getattr(self, direction)]
-
+        self.location = globals()[getattr(self.location, direction)]
 
 # west_house = Room("West of House", "north_house")
 # north_house = Room("North of House", None)
+
 
 moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_house', 'palm_trees', None, None, None,
                    None, None, None, 'This place is where Moana lives with her family and there are 4 exits: to the '
@@ -86,14 +105,16 @@ crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, Non
                   '\nThe only exit is back to the west.')
 
 
+player = Character("Player", 'Strong', 100, "Fine", moana_house)
+
 current_node = moana_house
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
 short_directions = ['n', 's', 'e', 'w', 'd', 'u', 'ne', 'nw', 'se', 'sw']
 
 
 while True:
-    print(current_node.name)
-    print(current_node.description)
+    print(player.location.name)
+    print(player.location.description)
     command = input('>_').strip().lower()
     if command == 'quit':
         quit(0)
@@ -102,7 +123,7 @@ while True:
         command = directions[pos]
     if command in directions:
         try:
-            current_node.move(command)
+            player.move(command)
         except KeyError:
             print("You cannot go that way. ")
     else:
