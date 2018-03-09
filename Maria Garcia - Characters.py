@@ -43,8 +43,9 @@ class Character(object):
 
     def attack(self, target):
         if self.alive:
-            print("%s attacks %s. Your health is %d. The enemy's health is %d." % (self.name, target.name, self.health,
-                                                                                   target.health))
+            print("%s attacks %s. %s's health is %d. The enemy's health is %d." % (self.name, target.name, self.name,
+                                                                                 self.health,
+                                                                                 target.health))
             target.take_damage(self.damage)
         else:
             print("%s is dead and cannot attack" % self.name)
@@ -61,5 +62,5 @@ player.attack(enemy)
 player.attack(enemy)
 
 enemy.attack(player)
-print(player.health)
-print(enemy.health)
+print("%s's health is %s." % (player.name, player.health))
+print("%s's health is %s." % (enemy.name, enemy.health))
