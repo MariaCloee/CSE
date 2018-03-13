@@ -57,11 +57,13 @@ ocean_shore = Room("Ocean Shore", 'into_ocean', 'moana_house', 'fishing_area', N
 fishing_area = Room("Fishing Area", None, None, None, 'waterfall', None, None, None, None, None, None,
                     'This is where there are fishing nets and 2 paths to the west and to the east. '
                     '\nAlso, there are some boats with paddles.')
-into_ocean = Room("Into the Ocean", 'rilm_of_monster', 'ocean_shore', 'taca', 'island', None, None, None, None, None,
+into_ocean = Room("Into the Ocean", 'rilm_of_monster', 'ocean_shore', 'taca', 'island', None, None, 'Kakamora', None,
+                  None,
                   None, 'You are in the middle of the ocean. There are 4 directions: west, north, east, and back '
                         'south. \nI suggested to not go east until you find Mali. Be careful you can get attack by the '
                         'coconuts.')
-coconuts = Room()
+coconuts = Room("Kakamora", None, None, None, None, None, None, None, None, None, 'into_ocean', "The Kakamora are "
+                "coconuts that are evil. They will kill you unless you have the special item.")
 island = Room("A Mystery Island", None, None, 'into_ocean', 'big_cave', None, None, None, None, None, None,
               'You will find Mali on this island and you can go to the west and back to the east.')
 
