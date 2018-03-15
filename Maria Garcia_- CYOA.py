@@ -56,11 +56,14 @@ cellar = Room("Cellar", None, None, None, None, None, 'grandma_house', None, Non
 villager_homes = Room("Villager's Homes", None, None, None, 'grandma_house', None, None, None, 'fishing_area',
                       None, None,
                       'This is where all the villagers sleep and play. There are 2 paths: west and northwest.')
-palm_trees = Room("Palm Trees", None, None, 'moana_house', 'other_ocean_shore', None, None, None, None, 'chief_stones',
+palm_trees = Room("Palm Trees", None, None, 'moana_house', 'other_ocean_shore', None, 'up_tree', None, None, 'chief_stones',
                   None,
                   'You are surrounded by palm trees with coconuts. There is a tree to your left that has a low '
                   '\nbranch and only one coconut. There are 4 paths: west to ocean shore, east is a path,\n '
                   'southeast is a path up the mountain, and north is a block by rocks that are not movable.')
+up_tree = Room("Up the Tree", None, None, None, None, 'palm_trees', None, None, None, None, None,
+               "You are up the tree and to your left you see the ocean. To your left, there is a coconut on a tree "
+               "that's the only coconut there.")
 other_ocean_shore = Room("The Other Ocean Shore", None, None, 'palm_trees', None, None, None, None, None, None, None,
                          'It is other ocean shore with the waterfall a path to the east,'
                          '\n and a path to the north that is blocked by a door.')
