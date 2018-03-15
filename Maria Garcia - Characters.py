@@ -64,4 +64,3 @@ player.attack(enemy)
 enemy.attack(player)
 print("%s's health is %s." % (player.name, player.health))
 print("%s's health is %s." % (enemy.name, enemy.health))
-s
