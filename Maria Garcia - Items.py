@@ -49,7 +49,7 @@ class Water(Consumables):
         print("%s drank the %s." % (person.name, self.name))
 
     def spill(self, person):
-        print("%s spilled the water." % person.name)
+        print("%s spilled the %s." % (person.name, self.name))
 
 
 class Ancient(Item):
