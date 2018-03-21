@@ -198,3 +198,16 @@ class Treasure(Magic):
 
     def open(self):
         print("The %s is open." % self.name)
+
+
+class Heart(Magic):
+    def __init__(self, name, value, color):
+        super(Heart, self).__init__(name, value, color)
+
+    def glow(self):
+        print("%s glows." % self.name)
+
+
+class MaliHook(Item):
+    def __init__(self, name, value):
+        super(MaliHook, self).__init__(name, value)
