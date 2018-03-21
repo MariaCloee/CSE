@@ -101,6 +101,14 @@ class Necklace(GrandmaItems):
         print("%s is wearing the %s." % (person.name, self.name))
 
 
+class Rug(GrandmaItems):
+    def __init__(self, name, value, color, size):
+        super(Rug, self).__init__(name, value, color, size)
+
+    def moves(self):
+        print("The %s has moved." % self.name)
+
+
 class Toys(Item):
     def __init__(self, name, value, color, size):
         super(Toys, self).__init__(name, value)
@@ -209,5 +217,16 @@ class Heart(Magic):
 
 
 class MaliHook(Item):
-    def __init__(self, name, value):
+    def __init__(self, name, value, color, shape):
         super(MaliHook, self).__init__(name, value)
+        self.color = color
+        self.shape = shape
+
+    def attack(self, person):
+        print("%s attacked with Grandma's %s." % (person.name, self.name))
+
+    def defend(self, person):
+        print("%s defended with Grandma's %s against %s." % (person.name, self.name, person.name))
+
+    def glow(self, person):
+        print("%s is glowing. %s is holding it." % (self.name, person.name))
