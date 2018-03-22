@@ -1,6 +1,6 @@
 class Room(object):
     def __init__(self, name, north, south, east, west, down, up, northeast, northwest, southeast, southwest,
-                 description, characters=None):
+                 description, characters=8):
         self.name = name
         self.north = north
         self.south = south
@@ -346,16 +346,22 @@ crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, Non
                   '\nThe only exit is back to the west.')
 
 
-player = Character("Player", 'Strong', 100, "Fine", moana_house)
+moana = Character('Moana', "She has the power to find Mali and deliver him across the ocean."
+                           " She is the daughter of the chief. She has power of the ocean", 100, 'happy', moana_house)
 
 current_node = moana_house
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
 short_directions = ['n', 's', 'e', 'w', 'd', 'u', 'ne', 'nw', 'se', 'sw']
 
-
+print("This is your character:")
+print("Name: %s" % moana.name)
+print("Health: %s" % moana.health)
+print("State of being: %s" % moana.state)
+print("Description: %s" % moana.description)
+print("")
 while True:
-    print(player.location.name)
-    print(player.location.description)
+    print(moana.location.name)
+    print(moana.location.description)
     command = input('>_').strip().lower()
     if command == 'quit':
         quit(0)
@@ -364,8 +370,8 @@ while True:
         command = directions[pos]
     if command in directions:
         try:
-            player.move(command)
+            moana.move(command)
         except KeyError:
-            print("You cannot go that way. ")
+            print("You cannot go that way.")
     else:
         print("Command not recognize.")

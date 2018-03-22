@@ -41,7 +41,7 @@ while answer != "no":
             print("You got over 21! You lost!")
             sys.exit()
 while answer == "no":
-    answer = ""
+    answer = "Now it is the Dealer's turn. You must get over 17. Do you want another card?"
     if answer == "no" and dealers_total < 17:
         answer = input("Now it is the Dealer's turn. You must get over 17. Do you want another card?")
         print("YOU HAVE TO SAY YES BECAUSE YOU NEED TO HAVE GREATER THAN 17!")
