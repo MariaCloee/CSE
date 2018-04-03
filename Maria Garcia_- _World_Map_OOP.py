@@ -1,6 +1,8 @@
 class Room(object):
     def __init__(self, name, north, south, east, west, down, up, northeast, northwest, southeast, southwest,
-                 description):
+                 description, items=None):
+        if items is None:
+            items = []
         self.name = name
         self.north = north
         self.south = south
@@ -13,6 +15,7 @@ class Room(object):
         self.northwest = northwest
         self.southeast = southeast
         self.description = description
+        self.items = items
 
     def move(self, direction):
         global current_node

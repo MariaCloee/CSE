@@ -1,41 +1,11 @@
-class Room(object):
-    def __init__(self, name, north, south, east, west, down, up, northeast, northwest, southeast, southwest,
-                 description, characters=8):
-        self.name = name
-        self.north = north
-        self.south = south
-        self.east = east
-        self.west = west
-        self.down = down
-        self.up = up
-        self.southwest = southwest
-        self.northeast = northeast
-        self.northwest = northwest
-        self.southeast = southeast
-        self.description = description
-        self.characters = characters
-
-
-class Character(object):
-    def __init__(self, name, description, health, state, location):
-        self.name = name
-        self.inventory = []
-        self.description = description
-        self.health = health
-        self.state = state
-        self.location = location  # Must be a Room
-
-    def take(self, item):
-        self.inventory.append(item)
-
-    def drop(self, item):
-        self.inventory.remove(item)
-
-    def look(self):
-        print(self.location.name)
-
-    def move(self, direction):
-        self.location = globals()[getattr(self.location, direction)]
+# Order:
+# - import statements (might)
+# - class definition
+#   - Items
+#   - Characters
+#   - Rooms
+# - Instantiation of classes
+# - Controller
 
 
 class Item(object):
@@ -272,6 +242,49 @@ class MaliHook(Item):
         print("%s is glowing. %s is holding it." % (self.name, person.name))
 
 
+class Character(object):
+    def __init__(self, name, description, health, state, location):
+        self.name = name
+        self.inventory = []
+        self.description = description
+        self.health = health
+        self.state = state
+        self.location = location  # Must be a Room
+
+    def take(self, item):
+        self.inventory.append(item)
+
+    def drop(self, item):
+        self.inventory.remove(item)
+
+    def look(self):
+        print(self.location.name)
+
+    def move(self, direction):
+        self.location = globals()[getattr(self.location, direction)]
+
+
+class Room(object):
+    def __init__(self, name, north, south, east, west, down, up, northeast, northwest, southeast, southwest,
+                 description, characters=8, items=None):
+        if items is None:
+            items = []
+        self.name = name
+        self.north = north
+        self.south = south
+        self.east = east
+        self.west = west
+        self.down = down
+        self.up = up
+        self.southwest = southwest
+        self.northeast = northeast
+        self.northwest = northwest
+        self.southeast = southeast
+        self.description = description
+        self.characters = characters
+        self.items = items
+
+
 moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_house', 'palm_trees', None, None, None,
                    None, None, None, 'This place is where Moana lives with her family and there are 4 exits: to the '
                                      'west there is a path, \nto the east is where grandma lives, north is the '
@@ -344,7 +357,6 @@ mali_hook = Room("Mali's Hook Room", None, None, None, None, None, None, None, N
 crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, None, None, None, None, None,
                   'You are in the crab’s layer. If you don’t leave, you will died. '
                   '\nThe only exit is back to the west.')
-
 
 moana = Character('Moana', "She has the power to find Mali and deliver him across the ocean."
                            " She is the daughter of the chief. She has power of the ocean", 100, 'happy', moana_house)
