@@ -226,9 +226,9 @@ class Heart(Magic):
         print("%s glows." % self.name)
 
 
-class MaliHook(Item):
+class MauiHook(Item):
     def __init__(self, name, value, color, shape):
-        super(MaliHook, self).__init__(name, value)
+        super(MauiHook, self).__init__(name, value)
         self.color = color
         self.shape = shape
 
@@ -243,22 +243,56 @@ class MaliHook(Item):
 
 
 class Character(object):
-    def __init__(self, name, description, health, state, location):
+    def __init__(self, name, description, health, state, location, dmg=10):
         self.name = name
         self.inventory = []
         self.description = description
         self.health = health
         self.state = state
         self.location = location  # Must be a Room
+        self.damage = dmg
+        self.alive = True
 
     def take(self, item):
         self.inventory.append(item)
+        print("Taken")
 
     def drop(self, item):
         self.inventory.remove(item)
+        print("Dropped")
 
     def look(self):
         print(self.location.name)
+
+    def read(self):
+        self.state = "happy"
+        print("Reading.")
+
+    def climb(self):
+        self.state = "happy"
+        print("You are climbing.")
+
+    def jump(self):
+        self.state = "jumpy"
+        print("You are jumping.")
+
+    def take_damage(self, amt):
+        if self.health <= 0:
+            print("%s is already dead" % self.name)
+            return
+        self.health -= amt
+        if self.health <= 0:
+            self.alive = False
+            print("%s has died." % self.name)
+
+    def attack(self, target):
+        if self.alive:
+            print("%s attacks %s. %s's health is %d. The enemy's health is %d." % (self.name, target.name, self.name,
+                                                                                   self.health,
+                                                                                   target.health))
+            target.take_damage(self.damage)
+        else:
+            print("%s is dead and cannot attack" % self.name)
 
     def move(self, direction):
         self.location = globals()[getattr(self.location, direction)]
@@ -286,7 +320,8 @@ class Room(object):
 
 
 moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_house', 'palm_trees', None, None, None,
-                   None, None, None, 'This place is where Moana lives with her family and there are 4 exits: to the '
+                   None, None, None, 'This place is where Moana and Malawi '
+                                     'lives with her family and there are 4 exits: to the '
                                      'west there is a path, \nto the east is where grandma lives, north is the '
                                      'ocean shore, and south is a path.')
 chief_stones = Room("Chief's Stones Mountains", 'moana_house', None, None, None, None, None, 'grandma_house',
@@ -320,7 +355,7 @@ hidden_cave = Room("The Hidden Cave", None, None, 'ocena_shore', 'waterfall', No
 ocean_shore = Room("Ocean Shore", 'into_ocean', 'moana_house', 'fishing_area', None, None, None, None, None, None, None,
                    'You are in the middle of the ocean. There are 4 directions: north, east,'
                    '\n west - is blocked by rocks and you see a tiny hole - and back south.'
-                   '\nI suggested to not go east until you find Mali. ')
+                   '\nI suggested to not go east until you find Maui. ')
 fishing_area = Room("Fishing Area", None, None, None, 'waterfall', None, None, None, None, None, None,
                     'This is where there are fishing nets and 2 paths to the west and to the east. '
                     '\nAlso, there are some boats with paddles.')
@@ -328,13 +363,13 @@ into_ocean = Room("Into the Ocean", 'rilm_of_monster', 'ocean_shore', 'taca', 'i
                   None,
                   None, 'You are in the middle of the ocean. There are 5 directions: west, north, east, northeast, '
                         'and back '
-                        'south. \nI suggested to not go east until you find Mali. Be careful you can get attack by the '
+                        'south. \nI suggested to not go east until you find Maui. Be careful you can get attack by the '
                         'coconuts.')
 coconuts = Room("Kakamora", None, None, None, None, None, None, None, None, None, 'into_ocean', "The Kakamora are "
                 "coconuts that are evil. They will kill you unless you have the special item. "
                 "The special item is grandma's stick to beat them up with.")
 island = Room("A Mystery Island", None, None, 'into_ocean', 'big_cave', None, None, None, None, None, None,
-              'You will find Mali on this island and you can go to the west and back to the east.')
+              'You will find Maui on this island and you can go to the west and back to the east.')
 
 big_cave = Room("A BIG Cave", None, None, 'island', None, None, None, None, None, None, None,
                 'There is a cave with no doors and an exit back to the east; where you came from.')
@@ -347,19 +382,25 @@ te_fiti = Room("An Island with Te Fit", None, None, None, None, None, None, None
 rilm_of_monster = Room("Rilm of Monsters", None, 'into_ocean', 'crab_layer', 'mission', None, None, None, None, None,
                        None, 'There are monsters here. To the east is the Crab Layer '
                        '\nand to the west is the Mission and back south.')
-mission = Room("The Mission", None, None, 'rilm_of_monster', None, None, None, None, 'mali_hook', None, None,
-               'Here you will find Mail’s hook here to your right is a note '
+mission = Room("The Mission", None, None, 'rilm_of_monster', None, None, None, None, 'maui_hook', None, None,
+               'Here you will find Maui’s hook here to your right is a note '
                '\nand to your northwest is a path and a path back to the east.')
-mali_hook = Room("Mali's Hook Room", None, None, None, None, None, None, None, None, 'mission', None,
-                 'You found Mali’s hook, but first you have to out the shell in the hole'
+maui_hook = Room("Maui's Hook Room", None, None, None, None, None, None, None, None, 'mission', None,
+                 'You found Maui’s hook, but first you have to out the shell in the hole'
                  '\n with the shell hole to get the hook. '
                  '\nYou can go back to southeast to go back to the Mission.')
 crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, None, None, None, None, None,
                   'You are in the crab’s layer. If you don’t leave, you will died. '
                   '\nThe only exit is back to the west.')
 
-moana = Character('Moana', "She has the power to find Mali and deliver him across the ocean."
-                           " She is the daughter of the chief. She has power of the ocean", 100, 'happy', moana_house)
+moana = Character('Moana', "She has the power to find Maui and deliver him across the ocean.\n"
+                           " She is the daughter of the chief. She has power of the ocean. \nShe thoroughly "
+                           "thinks everything. She is positive. ", 'happy', moana_house, 100)
+maui = Character('Maui', "He has the hook from the gods. \nHe helps Moana find Te Fit and defeat Taca. "
+                         "\nHe has animal changing powers", 'happy', island, 1000)
+malawi = Character('Malawi', "He has great sailing skills. He is also the long lost cousin/step-brother of Moana.\n "
+                             "He is a great seeker. He lost is dad while going sailing and his mom abandoned him.\n "
+                             "He is sad about that. He is adopted by Moana's family ", 'sad', moana_house, 100)
 
 current_node = moana_house
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
@@ -370,7 +411,7 @@ print("Name: %s" % moana.name)
 print("Health: %s" % moana.health)
 print("State of being: %s" % moana.state)
 print("Description: %s" % moana.description)
-print("")
+print()
 while True:
     print(moana.location.name)
     print(moana.location.description)
@@ -378,6 +419,7 @@ while True:
     if command == 'quit':
         quit(0)
     elif command in short_directions:
+        print("")
         pos = short_directions.index(command)
         command = directions[pos]
     if command in directions:
