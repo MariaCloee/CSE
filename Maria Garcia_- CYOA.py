@@ -370,7 +370,6 @@ coconuts = Room("Kakamora", None, None, None, None, None, None, None, None, None
                 "The special item is grandma's stick to beat them up with.")
 island = Room("A Mystery Island", None, None, 'into_ocean', 'big_cave', None, None, None, None, None, None,
               'You will find Maui on this island and you can go to the west and back to the east.')
-
 big_cave = Room("A BIG Cave", None, None, 'island', None, None, None, None, None, None, None,
                 'There is a cave with no doors and an exit back to the east; where you came from.')
 taca = Room("Taca", None, None, None, 'into_ocean', None, None, None, None, None, None, 'Taca is the new enemy. '
@@ -395,23 +394,44 @@ crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, Non
 
 moana = Character('Moana', "She has the power to find Maui and deliver him across the ocean.\n"
                            " She is the daughter of the chief. She has power of the ocean. \nShe thoroughly "
-                           "thinks everything. She is positive. ", 'happy', moana_house, 100)
+                           "thinks everything. She is positive. ", 100, 'happy', moana_house, 10)
 maui = Character('Maui', "He has the hook from the gods. \nHe helps Moana find Te Fit and defeat Taca. "
-                         "\nHe has animal changing powers", 'happy', island, 1000)
+                         "\nHe has animal changing powers", 1000, 'happy', island, 5)
 malawi = Character('Malawi', "He has great sailing skills. He is also the long lost cousin/step-brother of Moana.\n "
                              "He is a great seeker. He lost is dad while going sailing and his mom abandoned him.\n "
-                             "He is sad about that. He is adopted by Moana's family ", 'sad', moana_house, 100)
+                             "He is sad about that. He is adopted by Moana's family ", 100, 'sad', moana_house, 10)
+grandma = Character('Grandma', 'She knows where the boats are at and she has items that you need.', 85, 'glad',
+                    grandma_house, 10)
+Tefiti = Character('Te Fiti', 'She gives good to the people.', 10000, 'always happy and positive', te_fiti, 5)
+TACA = Character('Taca', 'She is powerful enough to destroy. \nShe has fire powers. Kill or...', 1000, 'angry', taca,
+                 20)
+villagers = Character('Villagers', 'They work and play around the island. \nThey could help.', 100, 'working',
+                      villager_homes, 10)
+mom = Character('Mom', 'She supports Moana, but follows what the chief says.\n She is the leaders of the village. '
+                       'She will support you.', 100, 'willing', moana_house)
+dad = Character('Chief or Dad', 'He doesn’t want Moana to go to the ocean. \nHe is the chief of the island. '
+                                '\nHer dad knows every inch of Chief Mountain.', 100, 'serious and loving',
+                chief_stones)
+ocean = Character('Ocean', 'It is Moana friend. It helps Moana throughout the journey.', 1000, 'caring', into_ocean
+                  and ocean_shore, 10)
+kakamora = Character('Kakamora', 'Coconuts that are evil. \nThey will kill you unless you give them the heart. '
+                                 'DON’T GIVE THEM THE HEART. \nFIGHT OR BAIL!', 1000, 'angry', coconuts, 25)
+shiny = Character('Shiny the Crab', 'He loves gold and is annoying. '
+                                    '\nHe will eat you unless you do something to prevent that.', 100, 'greedy',
+                  crab_layer, 20)
+monsters = Character('Monsters of the Rilm', 'They will eat you unless you kill them or run away.', 100, 'hungry',
+                     rilm_of_monster, 30)
 
 current_node = moana_house
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
 short_directions = ['n', 's', 'e', 'w', 'd', 'u', 'ne', 'nw', 'se', 'sw']
 
-print("This is your character:")
-print("Name: %s" % moana.name)
-print("Health: %s" % moana.health)
-print("State of being: %s" % moana.state)
-print("Description: %s" % moana.description)
-print()
+# print("This is your character:")
+# print("Name: %s" % moana.name)
+# print("Health: %s" % moana.health)
+# print("State of being: %s" % moana.state)
+# print("Description: %s" % moana.description)
+# print()
 while True:
     print(moana.location.name)
     print(moana.location.description)
