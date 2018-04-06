@@ -319,6 +319,22 @@ class Room(object):
         self.items = items
 
 
+mango = Fruits('Mango', '$1', 'Green with red skin and yellow mango', 'delicious')
+banana = Fruits('Banana', '$1', 'yellow', 'good')
+magic_coconut = Coconuts('The One', 'Valuable', 'brown with white', None)
+the_coconuts = Coconuts('Coconuts', '$5', 'brown', 'There is water inside the coconuts to drink.')
+water_bottle = Water('Water Bottle', '$3', 'clear')
+drum = Drum("Magic Drum", 'Shows you the truth', 'wood brown')
+chief_hat = ChiefHat("The Chief Hat", 'Makes you head of the village', 'Medium', 'Red & White & Light Brown')
+stick = Stick("Grandma's Stick", 'Helps you along the way.', 'Light tan', 'Long')
+necklace = Necklace("Grandma's Necklace", 'You need it to store the heart', 'Blue, White, and aqua', 'small',
+                    '15 beads')
+rug = Rug("The Rug", 'Has a secret to share.', 'Rug with rings', 'Large')
+ball = Ball()
+
+heart = Heart("Te Fift's Heart", 'creates life or destroys life', 'glowing green')
+
+
 moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_house', 'palm_trees', None, None, None,
                    None, None, None, 'This place is where Moana and Malawi '
                                      'lives with her family and there are 4 exits: to the '
@@ -397,12 +413,12 @@ moana = Character('Moana', "She has the power to find Maui and deliver him acros
                            "thinks everything. She is positive. ", 100, 'happy', moana_house, 10)
 maui = Character('Maui', "He has the hook from the gods. \nHe helps Moana find Te Fit and defeat Taca. "
                          "\nHe has animal changing powers", 1000, 'happy', island, 5)
-malawi = Character('Malawi', "He has great sailing skills. He is also the long lost cousin/step-brother of Moana.\n "
+malawi = Character('Malawi', "He has great sailing skills. \nHe is also the long lost cousin/step-brother of Moana.\n "
                              "He is a great seeker. He lost is dad while going sailing and his mom abandoned him.\n "
-                             "He is sad about that. He is adopted by Moana's family ", 100, 'sad', moana_house, 10)
+                             "He is sad about that. \nHe is adopted by Moana's family ", 100, 'sad', moana_house, 10)
 grandma = Character('Grandma', 'She knows where the boats are at and she has items that you need.', 85, 'glad',
                     grandma_house, 10)
-Tefiti = Character('Te Fiti', 'She gives good to the people.', 10000, 'always happy and positive', te_fiti, 5)
+TeFiti = Character('Te Fiti', 'She gives good to the people.', 10000, 'always happy and positive', te_fiti, 5)
 TACA = Character('Taca', 'She is powerful enough to destroy. \nShe has fire powers. Kill or...', 1000, 'angry', taca,
                  20)
 villagers = Character('Villagers', 'They work and play around the island. \nThey could help.', 100, 'working',
