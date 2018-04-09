@@ -141,6 +141,9 @@ class Shell(Toys):
     def listen(self, person):
         print("%s is listening through the %s." % (person.name, self.name))
 
+    def put(self, person):
+        print("%s put the %s in the hole." % (person.name, self.name))
+
 
 class Tools(Item):
     def __init__(self, name, value):
@@ -156,7 +159,7 @@ class Sack(Tools):
         self.color = color
 
     def put_in(self, person):
-        print("%s put %s in the %s." % (person.name, self.name, self.name))
+        print("%s put the %s in the %s." % (person.name, self.name, self.name))
 
 
 class Ladder(Tools):
@@ -210,9 +213,8 @@ class Key(Magic):
 
 
 class Treasure(Magic):
-    def __init__(self, name, value, color, key):
+    def __init__(self, name, value, color):
         super(Treasure, self).__init__(name, value, color)
-        self.key = key
 
     def open(self):
         print("The %s is open." % self.name)
@@ -242,14 +244,23 @@ class MauiHook(Item):
         print("%s is glowing. %s is holding it." % (self.name, person.name))
 
 
+class Bowl(Item):
+    def __init__(self, name, value, color, size):
+        super(Bowl, self).__init__(name, value)
+        self.color = color
+        self.size = size
+
+    def put_in(self, person):
+        print("%s put a %s in the %s." % (person.name, self.name, self.name))
+
+
 class Character(object):
-    def __init__(self, name, description, health, state, location, dmg=10):
+    def __init__(self, name, description, health, state, dmg=10):
         self.name = name
         self.inventory = []
         self.description = description
         self.health = health
         self.state = state
-        self.location = location  # Must be a Room
         self.damage = dmg
         self.alive = True
 
@@ -325,15 +336,26 @@ magic_coconut = Coconuts('The One', 'Valuable', 'brown with white', None)
 the_coconuts = Coconuts('Coconuts', '$5', 'brown', 'There is water inside the coconuts to drink.')
 water_bottle = Water('Water Bottle', '$3', 'clear')
 drum = Drum("Magic Drum", 'Shows you the truth', 'wood brown')
-chief_hat = ChiefHat("The Chief Hat", 'Makes you head of the village', 'Medium', 'Red & White & Light Brown')
+chief_hat = ChiefHat("Chief Hat", 'Makes you head of the village', 'Medium', 'Red & White & Light Brown')
 stick = Stick("Grandma's Stick", 'Helps you along the way.', 'Light tan', 'Long')
 necklace = Necklace("Grandma's Necklace", 'You need it to store the heart', 'Blue, White, and aqua', 'small',
                     '15 beads')
-rug = Rug("The Rug", 'Has a secret to share.', 'Rug with rings', 'Large')
-ball = Ball()
-
+rug = Rug("Rug", 'Has a secret to share.', 'Rug with rings', 'Large')
+ball = Ball("Child's Ball", 'Use for something on your boat.', 'blue', 'small')
+shell = Shell('Shell', 'The key to a chest.', 'Pink with white.', 'Normal shell size.')
+sack = Sack("Sack", 'You can put everything you find in it.', 'Brown')
+ladder = Ladder('Ladder', 'Helps you climb.')
+paddle = Paddle('Paddle', 'Useful for many things.', 'long')
+fishing_boats = Boat('Fishing boats', 'Use for catching fishes.', 'large', 'Has a big sail')
+travelling_boats = Boat('Travelling Boats', 'Use for travelling far places.', 'Larger or the same as '
+                                                                              'than the fishing boats', "Bigger sail.")
+key = Key('Magical Key', 'The key for a new path.', 'Gold')
+treasure = Treasure("Treasure Chest", 'Contains one thing: Shell. No Key. You need the ball to put on the'
+                                      ' hole at the top of the chest.', 'Gold with light brown')
 heart = Heart("Te Fift's Heart", 'creates life or destroys life', 'glowing green')
-
+hook_maui = MauiHook("Maui's Hook", 'Will help you defeat Taca.', 'White with blue handle', 'Hook Shape')
+bowl = Bowl('Round Bowl', 'Use for put things like fruit in.', 'Gray that shines', 'Small bowl that may '
+                                                                                   'fit in a small sack.')
 
 moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_house', 'palm_trees', None, None, None,
                    None, None, None, 'This place is where Moana and Malawi '
@@ -407,36 +429,31 @@ maui_hook = Room("Maui's Hook Room", None, None, None, None, None, None, None, N
 crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, None, None, None, None, None,
                   'You are in the crab’s layer. If you don’t leave, you will died. '
                   '\nThe only exit is back to the west.')
-
+#
 moana = Character('Moana', "She has the power to find Maui and deliver him across the ocean.\n"
                            " She is the daughter of the chief. She has power of the ocean. \nShe thoroughly "
-                           "thinks everything. She is positive. ", 100, 'happy', moana_house, 10)
+                           "thinks everything. She is positive. ", 100, 'happy', 10)
 maui = Character('Maui', "He has the hook from the gods. \nHe helps Moana find Te Fit and defeat Taca. "
-                         "\nHe has animal changing powers", 1000, 'happy', island, 5)
+                         "\nHe has animal changing powers", 1000, 'happy', 5)
 malawi = Character('Malawi', "He has great sailing skills. \nHe is also the long lost cousin/step-brother of Moana.\n "
                              "He is a great seeker. He lost is dad while going sailing and his mom abandoned him.\n "
-                             "He is sad about that. \nHe is adopted by Moana's family ", 100, 'sad', moana_house, 10)
+                             "He is sad about that. \nHe is adopted by Moana's family ", 100, 'sad', 10)
 grandma = Character('Grandma', 'She knows where the boats are at and she has items that you need.', 85, 'glad',
-                    grandma_house, 10)
-TeFiti = Character('Te Fiti', 'She gives good to the people.', 10000, 'always happy and positive', te_fiti, 5)
-TACA = Character('Taca', 'She is powerful enough to destroy. \nShe has fire powers. Kill or...', 1000, 'angry', taca,
-                 20)
+                    10)
+TeFiti = Character('Te Fiti', 'She gives good to the people.', 10000, 'always happy and positive', 5)
+TACA = Character('Taca', 'She is powerful enough to destroy. \nShe has fire powers. Kill or...', 1000, 'angry', 20)
 villagers = Character('Villagers', 'They work and play around the island. \nThey could help.', 100, 'working',
-                      villager_homes, 10)
+                      10)
 mom = Character('Mom', 'She supports Moana, but follows what the chief says.\n She is the leaders of the village. '
-                       'She will support you.', 100, 'willing', moana_house)
+                       'She will support you.', 100, 'willing')
 dad = Character('Chief or Dad', 'He doesn’t want Moana to go to the ocean. \nHe is the chief of the island. '
-                                '\nHer dad knows every inch of Chief Mountain.', 100, 'serious and loving',
-                chief_stones)
-ocean = Character('Ocean', 'It is Moana friend. It helps Moana throughout the journey.', 1000, 'caring', into_ocean
-                  and ocean_shore, 10)
+                                '\nHer dad knows every inch of Chief Mountain.', 100, 'serious and loving')
+ocean = Character('Ocean', 'It is Moana friend. It helps Moana throughout the journey.', 1000, 'caring', 10)
 kakamora = Character('Kakamora', 'Coconuts that are evil. \nThey will kill you unless you give them the heart. '
-                                 'DON’T GIVE THEM THE HEART. \nFIGHT OR BAIL!', 1000, 'angry', coconuts, 25)
+                                 'DON’T GIVE THEM THE HEART. \nFIGHT OR BAIL!', 1000, 'angry', 25)
 shiny = Character('Shiny the Crab', 'He loves gold and is annoying. '
-                                    '\nHe will eat you unless you do something to prevent that.', 100, 'greedy',
-                  crab_layer, 20)
-monsters = Character('Monsters of the Rilm', 'They will eat you unless you kill them or run away.', 100, 'hungry',
-                     rilm_of_monster, 30)
+                                    '\nHe will eat you unless you do something to prevent that.', 100, 'greedy', 20)
+monsters = Character('Monsters of the Rilm', 'They will eat you unless you kill them or run away.', 100, 'hungry', 30)
 
 current_node = moana_house
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
