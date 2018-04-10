@@ -6,6 +6,7 @@
 #   - Rooms
 # - Instantiation of classes
 # - Controller
+# REMOVE THE DEFAULT CHARACTERS!!!!!
 
 
 class Item(object):
@@ -263,6 +264,7 @@ class Character(object):
         self.state = state
         self.damage = dmg
         self.alive = True
+        self.location = None
 
     def take(self, item):
         self.inventory.append(item)
@@ -272,8 +274,8 @@ class Character(object):
         self.inventory.remove(item)
         print("Dropped")
 
-    def look(self):
-        print(self.location.name)
+    # def look(self):
+    #     print(self.location.name)
 
     def read(self):
         self.state = "happy"
@@ -311,7 +313,9 @@ class Character(object):
 
 class Room(object):
     def __init__(self, name, north, south, east, west, down, up, northeast, northwest, southeast, southwest,
-                 description, characters=8, items=None):
+                 description, characters=None, items=None):
+        if characters is None:
+            characters = []
         if items is None:
             items = []
         self.name = name
@@ -357,28 +361,55 @@ hook_maui = MauiHook("Maui's Hook", 'Will help you defeat Taca.', 'White with bl
 bowl = Bowl('Round Bowl', 'Use for put things like fruit in.', 'Gray that shines', 'Small bowl that may '
                                                                                    'fit in a small sack.')
 
+moana = Character('Moana', "She has the power to find Maui and deliver him across the ocean.\n"
+                           " She is the daughter of the chief. She has power of the ocean. \nShe thoroughly "
+                           "thinks everything. She is positive. ", 100, 'happy', 10)
+maui = Character('Maui', "He has the hook from the gods. \nHe helps Moana find Te Fit and defeat Taca. "
+                         "\nHe has animal changing powers", 1000, 'happy', 5)
+malawi = Character('Malawi', "He has great sailing skills. \nHe is also the long lost cousin/step-brother of Moana.\n "
+                             "He is a great seeker. He lost is dad while going sailing and his mom abandoned him.\n "
+                             "He is sad about that. \nHe is adopted by Moana's family ", 100, 'sad', 10)
+grandma = Character('Grandma', 'She knows where the boats are at and she has items that you need.', 85, 'glad',
+                    10)
+TeFiti = Character('Te Fiti', 'She gives good to the people.', 10000, 'always happy and positive', 5)
+TACA = Character('Taca', 'She is powerful enough to destroy. \nShe has fire powers. Kill or...', 1000, 'angry', 20)
+villagers = Character('Villagers', 'They work and play around the island. \nThey could help.', 100, 'working',
+                      10)
+mom = Character('Mom', 'She supports Moana, but follows what the chief says.\n She is the leaders of the village. '
+                       'She will support you.', 100, 'willing')
+dad = Character('Chief or Dad', 'He doesn’t want Moana to go to the ocean. \nHe is the chief of the island. '
+                                '\nHer dad knows every inch of Chief Mountain.', 100, 'serious and loving')
+ocean = Character('Ocean', 'It is Moana friend. It helps Moana throughout the journey.', 1000, 'caring', 10)
+kakamora = Character('Kakamora', 'Coconuts that are evil. \nThey will kill you unless you give them the heart. '
+                                 'DON’T GIVE THEM THE HEART. \nFIGHT OR BAIL!', 1000, 'angry', 25)
+shiny = Character('Shiny the Crab', 'He loves gold and is annoying. '
+                                    '\nHe will eat you unless you do something to prevent that.', 100, 'greedy', 20)
+monsters = Character('Monsters of the Rilm', 'They will eat you unless you kill them or run away.', 100, 'hungry', 30)
+
 moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_house', 'palm_trees', None, None, None,
                    None, None, None, 'This place is where Moana and Malawi '
                                      'lives with her family and there are 4 exits: to the '
                                      'west there is a path, \nto the east is where grandma lives, north is the '
-                                     'ocean shore, and south is a path.')
+                                     'ocean shore, and south is a path.', [mom])
 chief_stones = Room("Chief's Stones Mountains", 'moana_house', None, None, None, None, None, 'grandma_house',
                     'palm_trees', None, None, 'You have arrived to a sacred place only for chiefs. '
                                               '\nThere is only a pile of stones and paths to the north '
-                                              'and northwest and northeast.')
+                                              'and northwest and northeast.', [dad])
 grandma_house = Room("Grandma's House", None, None, 'villager_homes', 'moana_house', 'cellar', None, None, None, None,
-                     'chief_stones', 'Grandma lives and there are 3 exits: west, southwest and east.')
+                     'chief_stones', 'Grandma lives and there are 3 exits: west, southwest and east.', [grandma])
 cellar = Room("Cellar", None, None, None, None, None, 'grandma_house', None, None, None, None,
               'There is a treasure chest.')
 villager_homes = Room("Villager's Homes", None, None, None, 'grandma_house', None, None, None, 'fishing_area',
                       None, None,
-                      'This is where all the villagers sleep and play. There are 2 paths: west and northwest.')
+                      'This is where all the villagers sleep and play. There are 2 paths: west and northwest.',
+                      [villagers])
 palm_trees = Room("Palm Trees", None, None, 'moana_house', 'other_ocean_shore', None, 'up_tree', None, None,
                   'chief_stones',
                   None,
                   'You are surrounded by palm trees with coconuts. There is a tree to your left that has a low '
                   '\nbranch and only one coconut. There are 4 paths: west to ocean shore, east is a path,\n '
-                  'southeast is a path up the mountain, and north is a block by rocks that are not movable.')
+                  'southeast is a path up the mountain, and north is a block by rocks that are not movable.',
+                  [villagers])
 up_tree = Room("Up the Tree", None, None, None, None, 'palm_trees', None, None, None, None, None,
                "You are up the tree and to your left you see the ocean. To your left, there is a coconut on a tree "
                "that's the only coconut there.")
@@ -429,56 +460,57 @@ maui_hook = Room("Maui's Hook Room", None, None, None, None, None, None, None, N
 crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, None, None, None, None, None,
                   'You are in the crab’s layer. If you don’t leave, you will died. '
                   '\nThe only exit is back to the west.')
-#
-moana = Character('Moana', "She has the power to find Maui and deliver him across the ocean.\n"
-                           " She is the daughter of the chief. She has power of the ocean. \nShe thoroughly "
-                           "thinks everything. She is positive. ", 100, 'happy', 10)
-maui = Character('Maui', "He has the hook from the gods. \nHe helps Moana find Te Fit and defeat Taca. "
-                         "\nHe has animal changing powers", 1000, 'happy', 5)
-malawi = Character('Malawi', "He has great sailing skills. \nHe is also the long lost cousin/step-brother of Moana.\n "
-                             "He is a great seeker. He lost is dad while going sailing and his mom abandoned him.\n "
-                             "He is sad about that. \nHe is adopted by Moana's family ", 100, 'sad', 10)
-grandma = Character('Grandma', 'She knows where the boats are at and she has items that you need.', 85, 'glad',
-                    10)
-TeFiti = Character('Te Fiti', 'She gives good to the people.', 10000, 'always happy and positive', 5)
-TACA = Character('Taca', 'She is powerful enough to destroy. \nShe has fire powers. Kill or...', 1000, 'angry', 20)
-villagers = Character('Villagers', 'They work and play around the island. \nThey could help.', 100, 'working',
-                      10)
-mom = Character('Mom', 'She supports Moana, but follows what the chief says.\n She is the leaders of the village. '
-                       'She will support you.', 100, 'willing')
-dad = Character('Chief or Dad', 'He doesn’t want Moana to go to the ocean. \nHe is the chief of the island. '
-                                '\nHer dad knows every inch of Chief Mountain.', 100, 'serious and loving')
-ocean = Character('Ocean', 'It is Moana friend. It helps Moana throughout the journey.', 1000, 'caring', 10)
-kakamora = Character('Kakamora', 'Coconuts that are evil. \nThey will kill you unless you give them the heart. '
-                                 'DON’T GIVE THEM THE HEART. \nFIGHT OR BAIL!', 1000, 'angry', 25)
-shiny = Character('Shiny the Crab', 'He loves gold and is annoying. '
-                                    '\nHe will eat you unless you do something to prevent that.', 100, 'greedy', 20)
-monsters = Character('Monsters of the Rilm', 'They will eat you unless you kill them or run away.', 100, 'hungry', 30)
 
-current_node = moana_house
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
 short_directions = ['n', 's', 'e', 'w', 'd', 'u', 'ne', 'nw', 'se', 'sw']
 
-# print("This is your character:")
-# print("Name: %s" % moana.name)
-# print("Health: %s" % moana.health)
-# print("State of being: %s" % moana.state)
-# print("Description: %s" % moana.description)
-# print()
+# Character Selection
+player = None
+selection_complete = False
+while not selection_complete:
+    print("Who would you like to play as? Moana or Malawi?")
+    player_selection = input(">_ ").lower().strip()
+    if player_selection == "moana":
+        player = moana
+        selection_complete = True
+    elif player_selection == 'malawi':
+        player = malawi
+        selection_complete = True
+    else:
+        print("Invalid option.")
+
+player.location = moana_house
+# Main Game
 while True:
-    print(moana.location.name)
-    print(moana.location.description)
+    # Room information
+    print(player.location.name)
+    print(player.location.description)
+
     command = input('>_').strip().lower()
+
+    # handles specific events before processing
     if command == 'quit':
         quit(0)
     elif command in short_directions:
-        print("")
         pos = short_directions.index(command)
         command = directions[pos]
+
+    # Movement
     if command in directions:
         try:
-            moana.move(command)
+            player.move(command)
         except KeyError:
             print("You cannot go that way.")
+    # Talk to other character
+    elif 'talk to' in command:
+        character_name = command[8:]  # Finds the string of the character
+        character = None
+        for char in player.location.characters:
+            if character_name == char.name.lower():
+                character = char
+        if character is None:
+            print("Invalid character")
+        else:
+            print("You talk to %s" % character.name)
     else:
         print("Command not recognize.")
