@@ -390,7 +390,7 @@ moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_hous
                    None, None, None, 'This place is where Moana and Malawi '
                                      'lives with her family and there are 4 exits: to the '
                                      'west there is a path, \nto the east is where grandma lives, north is the '
-                                     'ocean shore, and south is a path.', [mom])
+                                     'ocean shore, and south is a path.', [mom, moana, malawi])
 chief_stones = Room("Chief's Stones Mountains", 'moana_house', None, None, None, None, None, 'grandma_house',
                     'palm_trees', None, None, 'You have arrived to a sacred place only for chiefs. '
                                               '\nThere is only a pile of stones and paths to the north '
@@ -511,6 +511,23 @@ while True:
         if character is None:
             print("Invalid character")
         else:
-            print("You talk to %s" % character.name)
+            if character == moana:
+                print("Moana: Hi. How are you?")
+                response = input("%s: " % player.name).lower()
+                if response == 'how are you' or 'how about you':
+                    print("Moana: Good.\n"
+                          "Moana: Welcome to the Save The World Game. Your goal is to find Te Fift and defeat Taca.\n "
+                          "You have to collect series of items along the way. \nThere are some items that are necessary"
+                          "\n "
+                          "and some are not. You have to unlock new paths and fins clues. \nHint: Follow the right "
+                          "path.\n")
+                elif response == "good" or "fine" or "bad":
+                    print("Moana: Welcome to the Save The World Game. Your goal is to find Te Fift and defeat Taca.\n "
+                    "You have to collect series of items along the way. \nThere are some items that are necessary"
+                    "\n "
+                    "and some are not. You have to unlock new paths and fins clues. \nHint: Follow the right "
+                    "path.\n")
+                # Add more directions
+
     else:
         print("Command not recognize.")
