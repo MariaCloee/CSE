@@ -8,6 +8,8 @@
 # - Controller
 # REMOVE THE DEFAULT CHARACTERS!!!!!
 
+# Items
+
 
 class Item(object):
     def __init__(self, name, value):
@@ -253,6 +255,7 @@ class Bowl(Item):
 
     def put_in(self, person):
         print("%s put a %s in the %s." % (person.name, self.name, self.name))
+# Characters:
 
 
 class Character(object):
@@ -309,6 +312,7 @@ class Character(object):
 
     def move(self, direction):
         self.location = globals()[getattr(self.location, direction)]
+# Rooms:
 
 
 class Room(object):
@@ -334,6 +338,7 @@ class Room(object):
         self.items = items
 
 
+# Items:
 mango = Fruits('Mango', '$1', 'Green with red skin and yellow mango', 'delicious')
 banana = Fruits('Banana', '$1', 'yellow', 'good')
 magic_coconut = Coconuts('The One', 'Valuable', 'brown with white', None)
@@ -360,7 +365,7 @@ heart = Heart("Te Fift's Heart", 'creates life or destroys life', 'glowing green
 hook_maui = MauiHook("Maui's Hook", 'Will help you defeat Taca.', 'White with blue handle', 'Hook Shape')
 bowl = Bowl('Round Bowl', 'Use for put things like fruit in.', 'Gray that shines', 'Small bowl that may '
                                                                                    'fit in a small sack.')
-
+# Characters:
 moana = Character('Moana', "She has the power to find Maui and deliver him across the ocean.\n"
                            " She is the daughter of the chief. She has power of the ocean. \nShe thoroughly "
                            "thinks everything. She is positive. ", 100, 'happy', 10)
@@ -386,6 +391,7 @@ shiny = Character('Shiny the Crab', 'He loves gold and is annoying. '
                                     '\nHe will eat you unless you do something to prevent that.', 100, 'greedy', 20)
 monsters = Character('Monsters of the Rilm', 'They will eat you unless you kill them or run away.', 100, 'hungry', 30)
 
+# Rooms:
 moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_house', 'palm_trees', None, None, None,
                    None, None, None, 'This place is where Moana and Malawi '
                                      'lives with her family and \nthere are 4 exits: to the '
@@ -462,6 +468,7 @@ crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, Non
                   'You are in the crab’s layer. \nIf you don’t leave, you will died. '
                   '\nThe only exit is back to the west.', [shiny])
 
+# Variables:
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
 short_directions = ['n', 's', 'e', 'w', 'd', 'u', 'ne', 'nw', 'se', 'sw']
 special_commands = ['i']   # i = inventory
@@ -521,7 +528,7 @@ while True:
                       "and some are not. You have to unlock new paths and finds clues. \nHint: Follow the right "
                       "path.\n"
                       'Moana: Are you Ready?')
-                #  Add more directions
+                # Don't add more directions because I am going to add directions at the beginning of the game.
                 response = input("%s: " % player.name).lower()
                 if response == 'yes':
                     print("Lets Go!!")
@@ -547,6 +554,15 @@ while True:
                       "The sack will be near the pack. Where is the pack?")
                 # sack = villagers homes
             elif character == dad:
-                print("Dad:")
+                print("Dad: Welcome to the Chief's Stones Mountains.")   # Add more dialogue with Dad
+            elif character == grandma:
+                print("Grandma: Hello my darling. \nYou have been chosen to deliver Maui across the ocean.")
+                if player == moana:
+                    print("Grandma: You have the power of the ocean sweetie. \nYou can do it.")
+                elif player == malawi:
+                    print("Grandma: You have amazing sailing skills.\n"
+                          "With your skills you can make it across the ocean.")
+                print("Grandma: I will give you a hint to finding the items: \n"
+                      "Some items are in my house. You can do it.")
     else:
         print("Command not recognize.")
