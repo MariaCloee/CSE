@@ -8,9 +8,8 @@
 # - Controller
 # REMOVE THE DEFAULT CHARACTERS!!!!!
 
+
 # Items
-
-
 class Item(object):
     def __init__(self, name, value):
         self.name = name
@@ -255,9 +254,9 @@ class Bowl(Item):
 
     def put_in(self, person):
         print("%s put a %s in the %s." % (person.name, self.name, self.name))
+
+
 # Characters:
-
-
 class Character(object):
     def __init__(self, name, description, health, state, dmg=10):
         self.name = name
@@ -312,9 +311,9 @@ class Character(object):
 
     def move(self, direction):
         self.location = globals()[getattr(self.location, direction)]
+
+
 # Rooms:
-
-
 class Room(object):
     def __init__(self, name, north, south, east, west, down, up, northeast, northwest, southeast, southwest,
                  description, characters=None, items=None):
@@ -350,10 +349,10 @@ stick = Stick("Grandma's Stick", 'Helps you along the way.', 'Light tan', 'Long'
 necklace = Necklace("Grandma's Necklace", 'You need it to store the heart', 'Blue, White, and aqua', 'small',
                     '15 beads')
 rug = Rug("Rug", 'Has a secret to share.', 'Rug with rings', 'Large')
-ball = Ball("Child's Ball", 'Use for something on your boat.', 'blue', 'small')
+ball = Ball("Child's Ball", 'Use for something on your boat.', 'blue', 'small')  # payment for the little boy
 shell = Shell('Shell', 'The key to a chest.', 'Pink with white.', 'Normal shell size.')
 sack = Sack("Sack", 'You can put everything you find in it.', 'Brown')
-ladder = Ladder('Ladder', 'Helps you climb.')
+ladder = Ladder('Ladder', 'Helps you climb.')  # Needed to get up the hole in maui's island
 paddle = Paddle('Paddle', 'Useful for many things.', 'long')
 fishing_boats = Boat('Fishing boats', 'Use for catching fishes.', 'large', 'Has a big sail')
 travelling_boats = Boat('Travelling Boats', 'Use for travelling far places.', 'Larger or the same as '
@@ -365,6 +364,7 @@ heart = Heart("Te Fift's Heart", 'creates life or destroys life', 'glowing green
 hook_maui = MauiHook("Maui's Hook", 'Will help you defeat Taca.', 'White with blue handle', 'Hook Shape')
 bowl = Bowl('Round Bowl', 'Use for put things like fruit in.', 'Gray that shines', 'Small bowl that may '
                                                                                    'fit in a small sack.')
+
 # Characters:
 moana = Character('Moana', "She has the power to find Maui and deliver him across the ocean.\n"
                            " She is the daughter of the chief. She has power of the ocean. \nShe thoroughly "
@@ -390,6 +390,7 @@ kakamora = Character('Kakamora', 'Coconuts that are evil. \nThey will kill you u
 shiny = Character('Shiny the Crab', 'He loves gold and is annoying. '
                                     '\nHe will eat you unless you do something to prevent that.', 100, 'greedy', 20)
 monsters = Character('Monsters of the Rilm', 'They will eat you unless you kill them or run away.', 100, 'hungry', 30)
+
 
 # Rooms:
 moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_house', 'palm_trees', None, None, None,
@@ -468,6 +469,7 @@ crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, Non
                   'You are in the crab’s layer. \nIf you don’t leave, you will died. '
                   '\nThe only exit is back to the west.', [shiny])
 
+
 # Variables:
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
 short_directions = ['n', 's', 'e', 'w', 'd', 'u', 'ne', 'nw', 'se', 'sw']
@@ -489,11 +491,24 @@ while not selection_complete:
         print("Invalid option.")
 
 player.location = moana_house
+
 # Main Game
 while True:
     # Room information
     print(player.location.name)
     print(player.location.description)
+
+    if len(player.location.items) > 0:
+        print()
+        print("The following items are here:")
+        for num, item in enumerate(player.location.items):
+            print(str(num + 1) + ") " + item.name)
+        print()
+
+    if len(player.location.characters) > 0:
+        print("You can talk to:")
+        for num, character in enumerate(player.location.characters):   # Ask Wiebe why the pep happens
+            print(str(num + 1) + ") " + character.name)
 
     command = input('>_').strip().lower()
 
@@ -510,6 +525,7 @@ while True:
             player.move(command)
         except KeyError:
             print("You cannot go that way.")
+
     # Talk to other character
     elif 'talk to' in command:
         character_name = command[8:]  # Finds the string of the character
@@ -564,5 +580,11 @@ while True:
                           "With your skills you can make it across the ocean.")
                 print("Grandma: I will give you a hint to finding the items: \n"
                       "Some items are in my house. You can do it.")
+            elif character == villagers:
+                print("**Narrator**: A little boy is near you and he has an item you need: the sack.")
+                print("%s: Can I have the sack little boy?" % player.name)
+                print("Boy: You can have it if you give me a blue ball that is really bounces. "
+                      "Can you you give me a ball?")
     else:
         print("Command not recognize.")
+# Do take/pick up; you have to do the thing like dialogue
