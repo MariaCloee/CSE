@@ -268,12 +268,12 @@ class Character(object):
         self.alive = True
         self.location = None
 
-    def take(self, item):
-        self.inventory.append(item)
+    def take(self, item_object):
+        self.inventory.append(item_object)
         print("Taken")
 
-    def drop(self, item):
-        self.inventory.remove(item)
+    def drop(self, item_object):
+        self.inventory.remove(item_object)
         print("Dropped")
 
     # def look(self):
@@ -397,7 +397,7 @@ moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_hous
                    None, None, None, 'This place is where Moana and Malawi '
                                      'lives with her family and \nthere are 4 exits: to the '
                                      'west there is a path, \nto the east is where grandma lives, north is the '
-                                     'ocean shore, and south is a path.', [mom, moana, malawi])
+                                     'ocean shore, and south is a path.', [mom, moana, malawi], [ball]) # fix
 chief_stones = Room("Chief's Stones Mountains", 'moana_house', None, None, None, None, None, 'grandma_house',
                     'palm_trees', None, None, 'You have arrived to a sacred place only for chiefs. '
                                               '\nThere is only a pile of stones and paths to the \nnorth '
@@ -506,12 +506,21 @@ while True:
         print()
 
     if len(player.location.characters) > 0:
-        print("You can talk to:")
+        if player == moana:
+            if player.location == moana_house:
+                player.location.characters.remove(moana)
+        elif player == malawi:
+            if player.location == moana_house:
+                player.location.characters.remove(malawi)
+        print()
+        print("You can talk to characters.\nAll you have to do is type 'talk to' "
+              "\nand whoever you want and you can talk to them. \nYou can talk to:")
         for num, character in enumerate(player.location.characters):   # Ask Wiebe why the pep happens
             print(str(num + 1) + ") " + character.name)
 
     command = input('>_').strip().lower()
-
+    if command == 'i':
+        print(player.inventory)
     # handles specific events before processing
     if command == 'quit':
         quit(0)
@@ -585,6 +594,16 @@ while True:
                 print("%s: Can I have the sack little boy?" % player.name)
                 print("Boy: You can have it if you give me a blue ball that is really bounces. "
                       "Can you you give me a ball?")
+    elif 'take' in command:
+        take_name = command[4:]
+        item_take = None
+        for item in player.location.items:
+            if take_name == item.name.lower():
+                item_take = item
+        if item_take is None:
+            print("Invalid Item")
+        else:
+            player.location.items.append(command)
     else:
         print("Command not recognize.")
 # Do take/pick up; you have to do the thing like dialogue
