@@ -1,3 +1,4 @@
+import time
 # Order:
 # - import statements (might)
 # - class definition
@@ -316,7 +317,7 @@ class Character(object):
 # Rooms:
 class Room(object):
     def __init__(self, name, north, south, east, west, down, up, northeast, northwest, southeast, southwest,
-                 description, characters=None, items=None):
+                 description, characters=None, non_talk_characters=None, items=None):
         if characters is None:
             characters = []
         if items is None:
@@ -334,6 +335,7 @@ class Room(object):
         self.southeast = southeast
         self.description = description
         self.characters = characters
+        self.non_talk_characters = non_talk_characters
         self.items = items
 
 
@@ -397,77 +399,79 @@ moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_hous
                    None, None, None, 'This place is where Moana and Malawi '
                                      'lives with her family and \nthere are 4 exits: to the '
                                      'west there is a path, \nto the east is where grandma lives, north is the '
-                                     'ocean shore, and south is a path.', [mom, moana, malawi], [ball]) # fix
+                                     'ocean shore, and south is a path.', [mom, moana, malawi], None, [ball])  # fix
 chief_stones = Room("Chief's Stones Mountains", 'moana_house', None, None, None, None, None, 'grandma_house',
                     'palm_trees', None, None, 'You have arrived to a sacred place only for chiefs. '
                                               '\nThere is only a pile of stones and paths to the \nnorth '
-                                              'and northwest and northeast.', [dad])
+                                              'and northwest and northeast.', [dad], None)
 grandma_house = Room("Grandma's House", None, None, 'villager_homes', 'moana_house', 'cellar', None, None, None, None,
-                     'chief_stones', 'Grandma lives and there are 3 exits: \nwest, southwest and east.', [grandma])
+                     'chief_stones', 'Grandma lives and there are 3 exits: \nwest, southwest and east.', [grandma],
+                     None)
 cellar = Room("Cellar", None, None, None, None, None, 'grandma_house', None, None, None, None,
-              'There is a treasure chest.', [None])
+              'There is a treasure chest.', None, None)
 villager_homes = Room("Villager's Homes", None, None, None, 'grandma_house', None, None, None, 'fishing_area',
                       None, None,
                       'This is where all the villagers sleep and play. \nThere are 2 paths: west and northwest.',
-                      [villagers])
+                      [villagers], None)
 palm_trees = Room("Palm Trees", None, None, 'moana_house', 'other_ocean_shore', None, 'up_tree', None, None,
                   'chief_stones',
                   None,
                   'You are surrounded by palm trees with coconuts. \nThere is a tree to your left that has a low '
                   '\nbranch and only one coconut. There are 4 paths: \nwest to ocean shore, east is a path,\n '
                   'southeast is a path up the mountain, and \nnorth is a block by rocks that are not movable.',
-                  [villagers])
+                  None, [villagers])
 up_tree = Room("Up the Tree", None, None, None, None, 'palm_trees', None, None, None, None, None,
                "You are up the tree and to your left you see the ocean. \nTo your left, there is a coconut on a tree "
-               "that's the only coconut there.", [None])
+               "that's the only coconut there.", None, None)
 other_ocean_shore = Room("The Other Ocean Shore", None, None, 'palm_trees', None, None, None, None, None, None, None,
                          'It is other ocean shore with the waterfall a path to the east,'
-                         '\n and a path to the north that is blocked by a door.', [ocean])
+                         '\n and a path to the north that is blocked by a door.', None, [ocean])
 waterfall = Room("Waterfall", None, 'other_ocean_shore', 'hidden_cave', None, None, None, None, None, None, None,
                  ' There is a waterfall leading to the other ocean shore to the south.  '
-                 '\nAlso, there is a path back east. Also, there are some boats. ', [None])
+                 '\nAlso, there is a path back east. Also, there are some boats. ', None, None)
 hidden_cave = Room("The Hidden Cave", None, None, 'ocean_shore', 'waterfall', None, None, None, None, None, None,
-                   'You found the hidden cave. \nThere is only 2 exits: back to the east and to the west.', [None])
+                   'You found the hidden cave. \nThere is only 2 exits: back to the east and to the west.', None,
+                   None)
 ocean_shore = Room("Ocean Shore", 'into_ocean', 'moana_house', 'fishing_area', None, None, None, None, None, None, None,
                    'The name says it all. \nThis is where the ocean shore is at and where the beach is at.\n'
-                   '\nThere is paths in all main directions: \nnorth,east, south, and west. West is blocked by a door.',
-                   [ocean, villagers])
-fishing_area = Room("Fishing Area", None, None, None, 'waterfall', None, None, None, None, None, None,
-                    'This is where there are fishing nets and \n2 paths to the west and to the east. '
-                    '\nAlso, there are some boats with paddles.', [ocean, villagers])
+                   'There is paths in all main directions: \nnorth, east, south, and west. West is blocked by a door.',
+                   None, [ocean, villagers])
+fishing_area = Room("Fishing Area", None, None, None, 'waterfall', None, None, None, None, 'villagers_homes', None,
+                    'This is where there are fishing nets and \n2 paths to the west and to the southeast. '
+                    '\nAlso, there are some boats with paddles.', None, [ocean, villagers])
 into_ocean = Room("Into the Ocean", 'rilm_of_monster', 'ocean_shore', 'taca', 'island', None, None, 'Kakamora', None,
                   None,
                   None, 'You are in the middle of the ocean. \nThere are 5 directions: west, north, east, northeast, '
                         'and back '
                         'south. \nI suggested to not go east until you find Maui. \n'
                         'Be careful you can get attack by the '
-                        'coconuts.', [ocean])
+                        'coconuts.', None, [ocean])
 coconuts = Room("Kakamora", None, None, None, None, None, None, None, None, None, 'into_ocean', "The Kakamora are "
                 "coconuts that are evil. \nThey will kill you unless you have the special item. "
-                "\nThe special item is grandma's stick to beat them up with.", [kakamora])
+                "\nThe special item is grandma's stick to beat them up with.", None, [kakamora])
 island = Room("A Mystery Island", None, None, 'into_ocean', 'big_cave', None, None, None, None, None, None,
-              'You will find Maui on this island and \nyou can go to the west and back to the east.', [maui])
+              'You will find Maui on this island and \nyou can go to the west and back to the east.', [maui], None)
 big_cave = Room("A BIG Cave", None, None, 'island', None, None, None, None, None, None, None,
-                'There is a cave with no doors and \nan exit back to the east; where you came from.', [None])
+                'There is a cave with no doors and \nan exit back to the east; where you came from.', None, None)
 taca = Room("Taca", None, None, None, 'into_ocean', None, None, None, None, None, None, 'Taca is the new enemy. '
             'How can you defeat Taca? \nFigure it out! '
-            '\nThere is an exit back west and \nyou can go east but you must defeat Taca.', [TACA])
+            '\nThere is an exit back west and \nyou can go east but you must defeat Taca.', None, [TACA])
 te_fiti = Room("An Island with Te Fit", None, None, None, None, None, None, None, None, None, None,
                'You defeated Taca.\n'
-               'Congrats. You completed the game.', [TeFiti])
+               'Congrats. You completed the game.', None, [TeFiti])
 rilm_of_monster = Room("Rilm of Monsters", None, 'into_ocean', 'crab_layer', 'mission', None, None, None, None, None,
                        None, 'There are monsters here. \nTo the east is the Crab Layer '
-                       '\nand to the west is the Mission and back south.', [monsters])
+                       '\nand to the west is the Mission and back south.', None, [monsters])
 mission = Room("The Mission", None, None, 'rilm_of_monster', None, None, None, None, 'maui_hook', None, None,
                'Here you will find Maui’s hook here to your right is a note '
-               '\nand to your northwest is a path and a path back to the east.', [None])
+               '\nand to your northwest is a path and a path back to the east.', None, None)
 maui_hook = Room("Maui's Hook Room", None, None, None, None, None, None, None, None, 'mission', None,
                  'You found Maui’s hook, but first you have to out the shell in the hole'
                  '\n with the shell hole to get the hook. '
-                 '\nYou can go back to southeast to go back to the Mission.', [None])
+                 '\nYou can go back to southeast to go back to the Mission.', None, None)
 crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, None, None, None, None, None,
                   'You are in the crab’s layer. \nIf you don’t leave, you will died. '
-                  '\nThe only exit is back to the west.', [shiny])
+                  '\nThe only exit is back to the west.', None, [shiny])
 
 
 # Variables:
@@ -491,32 +495,36 @@ while not selection_complete:
         print("Invalid option.")
 
 player.location = moana_house
+if player == moana:
+    if player.location == moana_house:
+        player.location.characters.remove(moana)
+elif player == malawi:
+    if player.location == moana_house:
+        player.location.characters.remove(malawi)
 
 # Main Game
 while True:
     # Room information
+    print()
     print(player.location.name)
     print(player.location.description)
-
+    # print("Here is the commands you can type to get and use things:"
+    #       "1) ")  # Finish this
     if len(player.location.items) > 0:
         print()
-        print("The following items are here:")
+        print("You can take and drop items from your inventory.\n"
+              "You have to type the exact name shown below to take and drop item. \n"
+              "The following items are here:")
         for num, item in enumerate(player.location.items):
             print(str(num + 1) + ") " + item.name)
         print()
-
     if len(player.location.characters) > 0:
-        if player == moana:
-            if player.location == moana_house:
-                player.location.characters.remove(moana)
-        elif player == malawi:
-            if player.location == moana_house:
-                player.location.characters.remove(malawi)
-        print()
         print("You can talk to characters.\nAll you have to do is type 'talk to' "
               "\nand whoever you want and you can talk to them. \nYou can talk to:")
         for num, character in enumerate(player.location.characters):   # Ask Wiebe why the pep happens
             print(str(num + 1) + ") " + character.name)
+    elif len(player.location.characters) == 'None':
+        print("There are no characters here.")
 
     command = input('>_').strip().lower()
     if command == 'i':
@@ -545,6 +553,7 @@ while True:
         if character is None:
             print("Invalid character")
         else:
+            time_between = 10
             if character == moana:
                 print("Moana: Hi. \n"
                       "Moana: Welcome to the Save The World Game. Your goal is to find Te Fift and defeat Taca.\n"
@@ -553,6 +562,7 @@ while True:
                       "and some are not. You have to unlock new paths and finds clues. \nHint: Follow the right "
                       "path.\n"
                       'Moana: Are you Ready?')
+                time.sleep(time_between)
                 # Don't add more directions because I am going to add directions at the beginning of the game.
                 response = input("%s: " % player.name).lower()
                 if response == 'yes':
@@ -567,6 +577,8 @@ while True:
                       "and some are not. You have to unlock new paths and finds clues. \nHint: Follow the right "
                       "path.\n"
                       'Malawi: Are you Ready?')
+                time.sleep(time_between)
+
                 #  Add more directions
                 response = input("%s: " % player.name).lower()
                 if response == 'yes':
@@ -574,28 +586,39 @@ while True:
                 elif response == "no" or "maybe":
                     print("Malawi: You can do it. Let's Go!!")
             elif character == mom:
-                print("Mom: You can do great warrior. \nI will give you a clue to your quest. Find the sack first.\n"
+                print("Mom: You can do it great warrior. \nI will give you a clue to your quest. Find the sack first.\n"
                       "It will help you carry things along the way. \nHere is a riddle to find the sack: "
                       "The sack will be near the pack. Where is the pack?")
                 # sack = villagers homes
+                time.sleep(time_between)
+
             elif character == dad:
                 print("Dad: Welcome to the Chief's Stones Mountains.")   # Add more dialogue with Dad
+                time.sleep(time_between)
+
             elif character == grandma:
                 print("Grandma: Hello my darling. \nYou have been chosen to deliver Maui across the ocean.")
+
                 if player == moana:
                     print("Grandma: You have the power of the ocean sweetie. \nYou can do it.")
+                    time.sleep(time_between)
+
                 elif player == malawi:
                     print("Grandma: You have amazing sailing skills.\n"
                           "With your skills you can make it across the ocean.")
                 print("Grandma: I will give you a hint to finding the items: \n"
                       "Some items are in my house. You can do it.")
+                time.sleep(time_between)
+
             elif character == villagers:
                 print("**Narrator**: A little boy is near you and he has an item you need: the sack.")
                 print("%s: Can I have the sack little boy?" % player.name)
                 print("Boy: You can have it if you give me a blue ball that is really bounces. "
                       "Can you you give me a ball?")
+                time.sleep(time_between)
+
     elif 'take' in command:
-        take_name = command[4:]
+        take_name = command[5:]
         item_take = None
         for item in player.location.items:
             if take_name == item.name.lower():
