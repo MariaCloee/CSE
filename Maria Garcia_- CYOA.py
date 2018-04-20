@@ -399,7 +399,7 @@ moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_hous
                    None, None, None, 'This place is where Moana and Malawi '
                                      'lives with her family and \nthere are 4 exits: to the '
                                      'west there is a path, \nto the east is where grandma lives, north is the '
-                                     'ocean shore, and south is a path.', [mom, moana, malawi], None, [ball])  # fix
+                                     'ocean shore, and south is a path.', [moana, malawi, mom], None, [ball])  # fix
 chief_stones = Room("Chief's Stones Mountains", 'moana_house', None, None, None, None, None, 'grandma_house',
                     'palm_trees', None, None, 'You have arrived to a sacred place only for chiefs. '
                                               '\nThere is only a pile of stones and paths to the \nnorth '
@@ -508,6 +508,7 @@ while True:
     print()
     print(player.location.name)
     print(player.location.description)
+    time.sleep(2)
     # print("Here is the commands you can type to get and use things:"
     #       "1) ")  # Finish this
     if len(player.location.items) > 0:
@@ -519,6 +520,7 @@ while True:
             print(str(num + 1) + ") " + item.name)
         print()
     if len(player.location.characters) > 0:
+        print()
         print("You can talk to characters.\nAll you have to do is type 'talk to' "
               "\nand whoever you want and you can talk to them. \nYou can talk to:")
         for num, character in enumerate(player.location.characters):   # Ask Wiebe why the pep happens
@@ -576,14 +578,14 @@ while True:
                       "\n"
                       "and some are not. You have to unlock new paths and finds clues. \nHint: Follow the right "
                       "path.\n"
-                      'Malawi: Are you Ready?')
+                      'Malawi: Are you Ready? Yes or No or Maybe so')
                 time.sleep(time_between)
 
                 #  Add more directions
                 response = input("%s: " % player.name).lower()
                 if response == 'yes':
                     print("Malawi: Lets Go!!")
-                elif response == "no" or "maybe":
+                elif response == "no" or "maybe" or "maybe so":
                     print("Malawi: You can do it. Let's Go!!")
             elif character == mom:
                 print("Mom: You can do it great warrior. \nI will give you a clue to your quest. Find the sack first.\n"
@@ -619,14 +621,29 @@ while True:
 
     elif 'take' in command:
         take_name = command[5:]
-        item_take = None
+        found = None
         for item in player.location.items:
             if take_name == item.name.lower():
-                item_take = item
-        if item_take is None:
+                player.take(item)
+                found = item
+        if found is None:
             print("Invalid Item")
         else:
-            player.location.items.append(command)
+            player.location.items.remove(found)
+            time.sleep(2)
+    elif 'drop' in command:
+        drop_name = command[5:]
+        dropped = None
+        for item in player.inventory:
+            if drop_name == item.name.lower():
+                player.drop(item)
+                dropped = item
+        if dropped is None:
+            print("Invalid Item. Item not in inventory.")
+        else:
+            player.location.items.append(dropped)
+            time.sleep(2)
+
     else:
         print("Command not recognize.")
 # Do take/pick up; you have to do the thing like dialogue
