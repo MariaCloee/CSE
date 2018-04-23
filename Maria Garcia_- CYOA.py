@@ -502,15 +502,24 @@ elif player == malawi:
     if player.location == moana_house:
         player.location.characters.remove(malawi)
 
+print("Here is the commands you can type to get and use things:"
+      "1) type 'i' to see your inventory"
+      "2) type 'take[item name]' to take an item "
+      "3) type 'drop[item name]' to drop an item"
+      "4) type 'north' or 'n' to go north"
+      "5) type 'south' or 's' to go south"
+      "6) type 'west' or 'w' to go west"
+      "7) type 'east' or 'e' to go east"
+      "8) type 'northwest' or 'nw' to go northwest"
+      "9) type 'northeast' or 'ne' to go northeast"
+      "10) type 'southwest' or 'sw' to go southwest")  # Finish this
 # Main Game
 while True:
     # Room information
     print()
     print(player.location.name)
     print(player.location.description)
-    time.sleep(2)
-    # print("Here is the commands you can type to get and use things:"
-    #       "1) ")  # Finish this
+
     if len(player.location.items) > 0:
         print()
         print("You can take and drop items from your inventory.\n"
@@ -528,9 +537,8 @@ while True:
     elif len(player.location.characters) == 'None':
         print("There are no characters here.")
 
-    command = input('>_').strip().lower()
-    if command == 'i':
-        print(player.inventory)
+    command = input('>_ ').strip().lower()
+
     # handles specific events before processing
     if command == 'quit':
         quit(0)
@@ -619,6 +627,7 @@ while True:
                       "Can you you give me a ball?")
                 time.sleep(time_between)
 
+# Take
     elif 'take' in command:
         take_name = command[5:]
         found = None
@@ -631,6 +640,8 @@ while True:
         else:
             player.location.items.remove(found)
             time.sleep(2)
+
+# Drop
     elif 'drop' in command:
         drop_name = command[5:]
         dropped = None
@@ -644,6 +655,11 @@ while True:
             player.location.items.append(dropped)
             time.sleep(2)
 
+# Inventory
+    elif command == 'i':
+        print("Your Inventory is:")
+        for num, item in enumerate(player.inventory):
+            print(str(num + 1) + ") " + item.name)
+            time.sleep(3)
     else:
-        print("Command not recognize.")
-# Do take/pick up; you have to do the thing like dialogue
+        print("Command not recognized.")
