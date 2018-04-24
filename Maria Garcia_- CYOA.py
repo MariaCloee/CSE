@@ -161,8 +161,8 @@ class Sack(Tools):
         super(Sack, self).__init__(name, value)
         self.color = color
 
-    def put_in(self, person):
-        print("%s put the %s in the %s." % (person.name, self.name, self.name))
+    def open(self, person):
+        print("%s opened the %s." % (person.name, self.name))
 
 
 class Ladder(Tools):
@@ -262,6 +262,7 @@ class Character(object):
     def __init__(self, name, description, health, state, dmg=10):
         self.name = name
         self.inventory = []
+        self.sack = []
         self.description = description
         self.health = health
         self.state = state
@@ -399,7 +400,8 @@ moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_hous
                    None, None, None, 'This place is where Moana and Malawi '
                                      'lives with her family and \nthere are 4 exits: to the '
                                      'west there is a path, \nto the east is where grandma lives, north is the '
-                                     'ocean shore, and south is a path.', [moana, malawi, mom], None, [ball])  # fix
+                                     'ocean shore, and south is a path.', [moana, malawi, mom], None, [ball, sack])
+# fix
 chief_stones = Room("Chief's Stones Mountains", 'moana_house', None, None, None, None, None, 'grandma_house',
                     'palm_trees', None, None, 'You have arrived to a sacred place only for chiefs. '
                                               '\nThere is only a pile of stones and paths to the \nnorth '
@@ -661,5 +663,47 @@ while True:
         for num, item in enumerate(player.inventory):
             print(str(num + 1) + ") " + item.name)
             time.sleep(3)
+# Sack
+    elif command == 'sack':
+        print("Your Sack is:")
+        for num, item in enumerate(player.sack):
+            print(str(num + 1) + ") " + item.name)
+            time.sleep(3)
+    elif command == 'open sack':
+        found = False
+        for item in player.inventory:
+            if isinstance(item, Sack):
+                found = True
+                sack.open(player.name)
+                print("You have opened the sack.")
+        if not found:
+            print("You don't have the sack.")
+    elif 'put' in command:
+        take_name = command[4:]
+        found = None
+        for item in player.inventory:
+            if take_name == item.name.lower():
+                player.sack.append(item)
+                found = item
+                print("%s is in sack." % item.name)
+        if found is None:
+            print("Invalid Item")
+        else:
+            player.sack.remove(found)
+            time.sleep(2)
+    elif 'leave' in command:
+        drop_name = command[6:]
+        dropped = None
+        for item in player.inventory:
+            if drop_name == item.name.lower():
+                player.sack.remove(item)
+                dropped = item
+                print("%s isn't in sack." % item.name)
+        if dropped is None:
+            print("Invalid Item. Item not in sack.")
+        else:
+            player.sack.append(dropped)
+            time.sleep(2)
+
     else:
         print("Command not recognized.")
