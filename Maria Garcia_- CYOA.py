@@ -8,9 +8,10 @@ import time
 # - Instantiation of classes
 # - Controller
 # REMOVE THE DEFAULT CHARACTERS!!!!!
-
-
 # Items
+SLEEP_TIME = 3
+
+
 class Item(object):
     def __init__(self, name, value):
         self.name = name
@@ -157,9 +158,10 @@ class Tools(Item):
 
 
 class Sack(Tools):
-    def __init__(self, name, value, color):
+    def __init__(self, name, value, color, items):
         super(Sack, self).__init__(name, value)
         self.color = color
+        self.items = items
 
     def open(self, person):
         print("%s opened the %s." % (person.name, self.name))
@@ -262,7 +264,6 @@ class Character(object):
     def __init__(self, name, description, health, state, dmg=10):
         self.name = name
         self.inventory = []
-        self.sack = []
         self.description = description
         self.health = health
         self.state = state
@@ -354,7 +355,7 @@ necklace = Necklace("Grandma's Necklace", 'You need it to store the heart', 'Blu
 rug = Rug("Rug", 'Has a secret to share.', 'Rug with rings', 'Large')
 ball = Ball("Child's Ball", 'Use for something on your boat.', 'blue', 'small')  # payment for the little boy
 shell = Shell('Shell', 'The key to a chest.', 'Pink with white.', 'Normal shell size.')
-sack = Sack("Sack", 'You can put everything you find in it.', 'Brown')
+sack = Sack("Sack", 'You can put everything you find in it.', 'Brown', [rug])
 ladder = Ladder('Ladder', 'Helps you climb.')  # Needed to get up the hole in maui's island
 paddle = Paddle('Paddle', 'Useful for many things.', 'long')
 fishing_boats = Boat('Fishing boats', 'Use for catching fishes.', 'large', 'Has a big sail')
@@ -641,7 +642,7 @@ while True:
             print("Invalid Item")
         else:
             player.location.items.remove(found)
-            time.sleep(2)
+            time.sleep(SLEEP_TIME)
 
 # Drop
     elif 'drop' in command:
@@ -655,55 +656,56 @@ while True:
             print("Invalid Item. Item not in inventory.")
         else:
             player.location.items.append(dropped)
-            time.sleep(2)
+            time.sleep(SLEEP_TIME)
 
 # Inventory
     elif command == 'i':
         print("Your Inventory is:")
         for num, item in enumerate(player.inventory):
             print(str(num + 1) + ") " + item.name)
-            time.sleep(3)
+            time.sleep(SLEEP_TIME)
 # Sack
-    elif command == 'sack':
-        print("Your Sack is:")
-        for num, item in enumerate(player.sack):
-            print(str(num + 1) + ") " + item.name)
-            time.sleep(3)
     elif command == 'open sack':
         found = False
         for item in player.inventory:
             if isinstance(item, Sack):
                 found = True
-                sack.open(player.name)
-                print("You have opened the sack.")
-        if not found:
-            print("You don't have the sack.")
+                sack.open(player)
+                time.sleep(SLEEP_TIME/2)
+        if sack in player.inventory:
+            print("Your Sack is:")
+            for num, item in enumerate(sack.items):
+                print(str(num + 1) + ") " + item.name)
+                time.sleep(SLEEP_TIME)
+        if sack not in player.inventory:
+            print("%s doesn't have the sack." % player.name)
+
     elif 'put' in command:
         take_name = command[4:]
         found = None
-        for item in player.inventory:
+        for item in player.inventory.sack:
             if take_name == item.name.lower():
-                player.sack.append(item)
+                sack.items.append(item)
                 found = item
                 print("%s is in sack." % item.name)
         if found is None:
             print("Invalid Item")
         else:
-            player.sack.remove(found)
-            time.sleep(2)
+            sack.items.remove(found)
+            time.sleep(SLEEP_TIME)
     elif 'leave' in command:
         drop_name = command[6:]
         dropped = None
-        for item in player.inventory:
+        for item in sack.items:
             if drop_name == item.name.lower():
-                player.sack.remove(item)
+                sack.items.remove(item)
                 dropped = item
                 print("%s isn't in sack." % item.name)
         if dropped is None:
             print("Invalid Item. Item not in sack.")
         else:
-            player.sack.append(dropped)
-            time.sleep(2)
+            player.location.items.append(dropped)
+            time.sleep(SLEEP_TIME)
 
     else:
         print("Command not recognized.")
