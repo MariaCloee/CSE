@@ -54,6 +54,9 @@ class Coconuts(Consumables):
     def open(self, person):
         print("%s open the %s in half." % (person.name, self.name))
 
+    def found(self, person, heart_name):
+        print("%s found the %s in the %s." % (person.name, heart_name.name, self.name))
+
 
 class Water(Consumables):
     def __init__(self, name, value, color):
@@ -344,7 +347,7 @@ class Room(object):
 # Items:
 mango = Fruits('Mango', '$1', 'Green with red skin and yellow mango', 'delicious')
 banana = Fruits('Banana', '$1', 'yellow', 'good')
-magic_coconut = Coconuts('The One', 'Valuable', 'brown with white', None)
+magic_coconut = Coconuts('Magic Coconut', 'Valuable', 'brown with white', None)
 the_coconuts = Coconuts('Coconuts', '$5', 'brown', 'There is water inside the coconuts to drink.')
 water_bottle = Water('Water Bottle', '$3', 'clear')
 drum = Drum("Magic Drum", 'Shows you the truth', 'wood brown')
@@ -419,7 +422,7 @@ palm_trees = Room("Palm Trees", None, None, 'moana_house', 'other_ocean_shore', 
                   'chief_stones',
                   None,
                   'You are surrounded by palm trees with coconuts. \nThere is a tree to your left that has a low '
-                  '\nbranch and only one coconut. There are 4 paths: \nwest to ocean shore, east is a path,\n '
+                  '\nbranch and only one coconut. There are 4 paths: \nwest to ocean shore, east is a path,\n'
                   'southeast is a path up the mountain, and \nnorth is a block by rocks that are not movable.',
                   None, [villagers], [mango, the_coconuts])
 up_tree = Room("Up the Tree", None, None, None, None, 'palm_trees', None, None, None, None, None,
@@ -672,8 +675,25 @@ while True:
         else:
             player.location.items.append(dropped)
             time.sleep(SLEEP_TIME)
-# Put the heart in the key
 
+# Put the heart in the key
+    elif command == 'open magic coconut':
+        found = False
+        for item in player.inventory:
+            if isinstance(item, Coconuts):
+                found = True
+                magic_coconut.open(player)
+                magic_coconut.found(player, heart)
+                time.sleep(SLEEP_TIME / 2)
+            else:
+                print("You don't have that item.")
+
+# Tree
+    elif command == 'climb tree':
+        player.location = up_tree
+
+    elif command == 'climb back down':
+        player.location = palm_trees
 # Clues
     elif command == 'clues':
         clues()
