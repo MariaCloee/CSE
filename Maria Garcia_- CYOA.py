@@ -266,7 +266,7 @@ class Bowl(Item):
 class Character(object):
     def __init__(self, name, description, health, state, dmg=10):
         self.name = name
-        self.inventory = []
+        self.inventory = [heart]
         self.description = description
         self.health = health
         self.state = state
@@ -282,8 +282,33 @@ class Character(object):
         self.inventory.remove(item_object)
         print("Dropped")
 
-    # def look(self):
-    #     print(self.location.name)
+    def fight_taca(self, person):
+        print("%s" % self.name)
+        print("%s is fighting Taca." % person.name)
+        print(maui.attack(TACA))
+        print("Attacks with Fireball:")
+        print(TACA.attack(maui))
+        print(TACA.attack(maui))
+        print(TACA.attack(maui))
+        print(TACA.attack(maui))
+        print(TACA.attack(maui))
+        print("%s shoots a fire ball at %s's boat and misses." % (person.name, person.name))
+        print("You are losing! What are you going to do to stop the fight and defeat Taca? Fight or...")
+        command4 = input(">_ ".lower().strip())
+
+        if command4 == 'show heart':
+            heart_name = command[5:]
+            for item1 in player.inventory:
+                if heart_name == item1.name.lower():
+                    player.take(item1)
+                    heart_name = item1
+            player.inventory.remove(heart)
+            print("%s showed %s." % (person.name, heart.name))
+            print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
+            player.location.name = te_fiti
+        else:
+            print("You don't have the heart to show.")
+# Finish Fight Scene
 
     def read(self):
         self.state = "happy"
@@ -308,9 +333,9 @@ class Character(object):
 
     def attack(self, target):
         if self.alive:
-            print("%s attacks %s. %s's health is %d. The enemy's health is %d." % (self.name, target.name, self.name,
-                                                                                   self.health,
-                                                                                   target.health))
+            print("%s attacks %s. %s's health is %d. The %s's health is %d." % (self.name, target.name, self.name,
+                                                                                self.health, target.name,
+                                                                                target.health))
             target.take_damage(self.damage)
         else:
             print("%s is dead and cannot attack" % self.name)
@@ -377,7 +402,7 @@ moana = Character('Moana', "She has the power to find Maui and deliver him acros
                            " She is the daughter of the chief. She has power of the ocean. \nShe thoroughly "
                            "thinks everything. She is positive. ", 100, 'happy', 10)
 maui = Character('Maui', "He has the hook from the gods. \nHe helps Moana find Te Fit and defeat Taca. "
-                         "\nHe has animal changing powers", 1000, 'happy', 5)
+                         "\nHe has animal changing powers", 1000, 'happy', 10)
 malawi = Character('Malawi', "He has great sailing skills. \nHe is also the long lost cousin/step-brother of Moana.\n "
                              "He is a great seeker. He lost is dad while going sailing and his mom abandoned him.\n "
                              "He is sad about that. \nHe is adopted by Moana's family ", 100, 'sad', 10)
@@ -418,14 +443,14 @@ villager_homes = Room("Villager's Homes", None, None, None, 'grandma_house', Non
                       None, None,
                       'This is where all the villagers sleep and play. \nThere are 2 paths: west and northwest.',
                       [villagers], None, [sack, water_bottle])
-palm_trees = Room("Palm Trees", None, None, 'moana_house', 'other_ocean_shore', None, 'up_tree', None, None,
+palm_trees = Room("Palm Trees", None, None, 'moana_house', 'other_ocean_shore', None, None, None, None,
                   'chief_stones',
                   None,
                   'You are surrounded by palm trees with coconuts. \nThere is a tree to your left that has a low '
                   '\nbranch and only one coconut. There are 4 paths: \nwest to ocean shore, east is a path,\n'
                   'southeast is a path up the mountain, and \nnorth is a block by rocks that are not movable.',
                   None, [villagers], [mango, the_coconuts])
-up_tree = Room("Up the Tree", None, None, None, None, 'palm_trees', None, None, None, None, None,
+up_tree = Room("Up the Tree", None, None, None, None, None, None, None, None, None, None,
                "You are up the tree and to your left you see the ocean. \nTo your left, there is a coconut on a tree "
                "that's the only coconut there.", None, None, [magic_coconut])
 other_ocean_shore = Room("The Other Ocean Shore", None, None, 'palm_trees', None, None, None, None, None, None, None,
@@ -480,7 +505,6 @@ crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, Non
                   'You are in the crab’s layer. \nIf you don’t leave, you will died. '
                   '\nThe only exit is back to the west.', None, [shiny])
 
-
 # Variables:
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
 short_directions = ['n', 's', 'e', 'w', 'd', 'u', 'ne', 'nw', 'se', 'sw']
@@ -520,11 +544,12 @@ def clues():
           "13) type 'open sack' to look in sack\n"
           "14) type move[item name] to move things\n"
           "15) type 'put' or 'leave' to put and drop things to and from your sack. \n"
-          "16) type 'clues' to show this again")
+          "16) type 'climb[item name]' to climb things.\n"
+          "17) type 'clues' to show this again")
     time.sleep(5)
 
 
-clues()
+# clues()     # Redo this
 player.location = moana_house
 if player == moana:
     if player.location == moana_house:
@@ -533,7 +558,6 @@ elif player == malawi:
     if player.location == moana_house:
         player.location.characters.remove(malawi)
 
-# Finish this
 # Main Game
 while True:
     # Room information
@@ -678,15 +702,27 @@ while True:
 
 # Put the heart in the key
     elif command == 'open magic coconut':
-        found = False
+        heart_found = False
+        magic_coconut_here = True
         for item in player.inventory:
             if isinstance(item, Coconuts):
-                found = True
+                heart_found = True
+                magic_coconut_here = False
+                player.take(heart)
                 magic_coconut.open(player)
                 magic_coconut.found(player, heart)
                 time.sleep(SLEEP_TIME / 2)
+                player.inventory.remove(magic_coconut)
+            elif heart_found is None:
+                print("Heart not found.")
             else:
                 print("You don't have that item.")
+
+# Fight scene
+    elif command == 'fight':
+        fight_name = command[6:]
+        fought = None
+        player.fight_taca(player)
 
 # Tree
     elif command == 'climb tree':
