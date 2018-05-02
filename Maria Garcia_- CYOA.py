@@ -267,6 +267,7 @@ class Character(object):
     def __init__(self, name, description, health, state, dmg=10):
         self.name = name
         self.inventory = [heart]
+        self.pep_with_you = []
         self.description = description
         self.health = health
         self.state = state
@@ -285,29 +286,15 @@ class Character(object):
     def fight_taca(self, person):
         print("%s" % self.name)
         print("%s is fighting Taca." % person.name)
-        print(maui.attack(TACA))
+        maui.attack(TACA)
         print("Attacks with Fireball:")
-        print(TACA.attack(maui))
-        print(TACA.attack(maui))
-        print(TACA.attack(maui))
-        print(TACA.attack(maui))
-        print(TACA.attack(maui))
-        print("%s shoots a fire ball at %s's boat and misses." % (person.name, person.name))
+        TACA.attack(maui)
+        TACA.attack(maui)
+        TACA.attack(maui)
+        TACA.attack(maui)
+        TACA.attack(maui)
+        print("%s shoots a fire ball at %s's boat and misses." % (taca.name, person.name))
         print("You are losing! What are you going to do to stop the fight and defeat Taca? Fight or...")
-        command4 = input(">_ ".lower().strip())
-
-        if command4 == 'show heart':
-            heart_name = command[5:]
-            for item1 in player.inventory:
-                if heart_name == item1.name.lower():
-                    player.take(item1)
-                    heart_name = item1
-            player.inventory.remove(heart)
-            print("%s showed %s." % (person.name, heart.name))
-            print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
-            player.location.name = te_fiti
-        else:
-            print("You don't have the heart to show.")
 # Finish Fight Scene
 
     def read(self):
@@ -325,7 +312,6 @@ class Character(object):
     def take_damage(self, amt):
         if self.health <= 0:
             print("%s is already dead" % self.name)
-            return
         self.health -= amt
         if self.health <= 0:
             self.alive = False
@@ -480,7 +466,7 @@ coconuts = Room("Kakamora", None, None, None, None, None, None, None, None, None
                 "coconuts that are evil. \nThey will kill you unless you have the special item. "
                 "\nThe special item is grandma's stick to beat them up with.", None, [kakamora], None)
 island = Room("A Mystery Island", None, None, 'into_ocean', 'big_cave', None, None, None, None, None, None,
-              'You will find Maui on this island and \nyou can go to the west and back to the east.', [maui], None,
+              'You will find Maui on this island and \nyou can go to the west and back to the east.', None, [maui],
               None)
 big_cave = Room("A BIG Cave", None, None, 'island', None, None, None, None, None, None, None,
                 'There is a cave with no doors and \nan exit back to the east; where you came from.', None, None,
@@ -490,7 +476,8 @@ taca = Room("Taca", None, None, None, 'into_ocean', None, None, None, None, None
             '\nThere is an exit back west and \nyou can go east but you must defeat Taca.', None, [TACA], None)
 te_fiti = Room("An Island with Te Fit", None, None, None, None, None, None, None, None, None, None,
                'You defeated Taca.\n'
-               'Congrats. You completed the game.', None, [TeFiti], None)
+               'Congrats. You completed the game.\n'
+               'What is your response?', None, [TeFiti], None)
 rilm_of_monster = Room("Rilm of Monsters", None, 'into_ocean', 'crab_layer', 'mission', None, None, None, None, None,
                        None, 'There are monsters here. \nTo the east is the Crab Layer '
                        '\nand to the west is the Mission and back south.', None, [monsters], None)
@@ -718,11 +705,49 @@ while True:
             else:
                 print("You don't have that item.")
 
+# Find Maui
+    elif 'find' in command:
+        find_name = command[5:]
+        found = None
+        for chars in player.location.non_talk_characters:
+            if find_name == chars.name.lower():
+                player.pep_with_you.append(chars)
+                found = chars
+                print("%s found %s. \nNow %s will be with you at all times \nand you can use %s for many things." %
+                      (player.name, chars.name, chars.name, chars.name))
+                print("Here is/are the people with you:")
+                for num, charas in enumerate(player.pep_with_you):
+                    print(str(num + 1) + ") " + charas.name)
+        if found is None:
+            print("Maui is not in this room.")
+        else:
+            player.location.non_talk_characters.remove(found)
+            time.sleep(SLEEP_TIME)
+
 # Fight scene
     elif command == 'fight':
-        fight_name = command[6:]
-        fought = None
-        player.fight_taca(player)
+        for maui in player.pep_with_you:
+            player.fight_taca(player)
+            command4 = input(">_ ".lower().strip())
+            if command4 == 'show heart':
+                heart_name = command[5:]
+                for item1 in player.inventory:
+                    if heart_name == item1.name.lower():
+                        player.take(item1)
+                        heart_name = item1
+                player.inventory.remove(heart)
+                print("%s showed %s." % (player.name, heart.name))
+                print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
+                player.location = te_fiti
+            if heart not in player.inventory:
+                print("You don't have the heart to show.")
+
+        if maui not in player.pep_with_you:
+            print("%s can't fight without Maui." % player.name)
+
+# Find Te Fift
+    elif player.location == te_fiti:
+        quit(0)
 
 # Tree
     elif command == 'climb tree':
