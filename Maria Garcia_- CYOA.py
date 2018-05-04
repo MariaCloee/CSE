@@ -54,8 +54,8 @@ class Coconuts(Consumables):
     def open(self, person):
         print("%s open the %s in half." % (person.name, self.name))
 
-    def found(self, person, heart_name):
-        print("%s found the %s in the %s." % (person.name, heart_name.name, self.name))
+    def found(self, person, heartname):
+        print("%s found the %s in the %s." % (person.name, heartname.name, self.name))
 
 
 class Water(Consumables):
@@ -266,7 +266,7 @@ class Bowl(Item):
 class Character(object):
     def __init__(self, name, description, health, state, dmg=10):
         self.name = name
-        self.inventory = [heart]
+        self.inventory = []
         self.pep_with_you = []
         self.description = description
         self.health = health
