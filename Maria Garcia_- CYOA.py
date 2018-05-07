@@ -726,22 +726,41 @@ while True:
 
 # Fight scene
     elif command == 'fight':
-        for maui in player.pep_with_you:
+        print("Remember you attack, TACA attacks more!")
+        time.sleep(1.5)
+        if heart not in player.inventory:
+            print("You don't have the heart to show.")
+        elif hook_maui not in player.inventory:
+            print("You don't have Maui's Hook.")
+        elif necklace not in player.inventory:
+            print("You don't have Grandma's Necklace.")
+        elif maui in player.pep_with_you:
             player.fight_taca(player)
             command4 = input(">_ ".lower().strip())
             if command4 == 'show heart':
-                heart_name = command[5:]
-                for item1 in player.inventory:
-                    if heart_name == item1.name.lower():
-                        player.take(item1)
-                        heart_name = item1
-                player.inventory.remove(heart)
-                print("%s showed %s." % (player.name, heart.name))
-                print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
-                player.location = te_fiti
-            if heart not in player.inventory:
-                print("You don't have the heart to show.")
-
+                    heart_name = command[5:]
+                    for item1 in player.inventory:
+                        if heart_name == item1.name.lower():
+                            player.take(item1)
+                            heart_name = item1
+                    player.inventory.remove(heart)
+                    print("%s showed %s." % (player.name, heart.name))
+                    print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
+                    player.location = te_fiti
+            while command4 == 'kill' or 'attack':
+                attack_name = command[5:]
+                player.fight_taca(player)
+                command4 = input(">_ ".lower().strip())
+                if command4 == 'show heart':
+                    heart_name = command[5:]
+                    for item1 in player.inventory:
+                        if heart_name == item1.name.lower():
+                            player.take(item1)
+                            heart_name = item1
+                    player.inventory.remove(heart)
+                    print("%s showed %s." % (player.name, heart.name))
+                    print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
+                    player.location = te_fiti
         if maui not in player.pep_with_you:
             print("%s can't fight without Maui." % player.name)
 
