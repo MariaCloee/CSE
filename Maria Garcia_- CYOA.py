@@ -784,6 +784,8 @@ while True:
         for num, item in enumerate(player.inventory):
             print(str(num + 1) + ") " + item.name)
             time.sleep(SLEEP_TIME)
+        if player.inventory > 10:
+            print("You max your inventory. ")
 # Sack
     elif command == 'open sack':
         found = False
