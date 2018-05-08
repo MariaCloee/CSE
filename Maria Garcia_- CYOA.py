@@ -276,8 +276,12 @@ class Character(object):
         self.location = None
 
     def take(self, item_object):
+        if len(self.inventory) >= 10:
+            print("You have too many items!")
+            return False
         self.inventory.append(item_object)
         print("Taken")
+        return True
 
     def drop(self, item_object):
         self.inventory.remove(item_object)
@@ -496,6 +500,8 @@ crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, Non
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
 short_directions = ['n', 's', 'e', 'w', 'd', 'u', 'ne', 'nw', 'se', 'sw']
 special_commands = ['i']   # i = inventory
+max_out = 7
+
 
 # Character Selection
 player = None
@@ -662,12 +668,12 @@ while True:
 # Take
     elif 'take' in command:
         take_name = command[5:]
-        found = None
+        found = False
         for item in player.location.items:
             if take_name == item.name.lower():
-                player.take(item)
-                found = item
-        if found is None:
+                if player.take(item):
+                    found = item
+        if found is False:
             print("Invalid Item")
         else:
             player.location.items.remove(found)
@@ -783,9 +789,7 @@ while True:
         print("Your Inventory is:")
         for num, item in enumerate(player.inventory):
             print(str(num + 1) + ") " + item.name)
-            time.sleep(SLEEP_TIME)
-        if player.inventory > 10:
-            print("You max your inventory. ")
+            time.sleep(1.5)
 # Sack
     elif command == 'open sack':
         found = False
