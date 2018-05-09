@@ -500,7 +500,6 @@ crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, Non
 directions = ['north', 'south', 'east', 'west', 'down', 'up', 'northeast', 'northwest', 'southeast', 'southwest']
 short_directions = ['n', 's', 'e', 'w', 'd', 'u', 'ne', 'nw', 'se', 'sw']
 special_commands = ['i']   # i = inventory
-max_out = 7
 
 
 # Character Selection
@@ -784,6 +783,24 @@ while True:
     elif command == 'clues':
         clues()
         print()
+
+# Shell
+    elif command == 'put shell':
+        if player.location == maui_hook:
+            shell_found = True
+            hook_maui1 = False
+            for item in player.inventory:
+                if isinstance(item, MauiHook):
+                    shell_found = True
+                    hook_maui1 = False
+                    player.take(hook_maui)
+                    print("The hole lowers and....")
+                    print("Maui's hook pops out!")
+                    time.sleep(SLEEP_TIME / 2)
+                    player.inventory.remove(shell)
+
+        if shell not in player.inventory:
+            print("You don't have the shell.")
 # Inventory
     elif command == 'i':
         print("Your Inventory is:")
