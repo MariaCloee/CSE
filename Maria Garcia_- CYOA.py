@@ -1,4 +1,5 @@
 import time
+import datetime
 # Order:
 # - import statements (might)
 # - class definition
@@ -10,6 +11,7 @@ import time
 # REMOVE THE DEFAULT CHARACTERS!!!!!
 # Items
 SLEEP_TIME = 3
+a = datetime.datetime.now()
 
 
 class Item(object):
@@ -489,9 +491,9 @@ mission = Room("The Mission", None, None, 'rilm_of_monster', None, None, None, N
                'Here you will find Maui’s hook here to your right is a note '
                '\nand to your northwest is a path and a path back to the east.', None, None, None)
 maui_hook = Room("Maui's Hook Room", None, None, None, None, None, None, None, None, 'mission', None,
-                 'You found Maui’s hook, but first you have to out the shell in the hole'
-                 '\n with the shell hole to get the hook. '
-                 '\nYou can go back to southeast to go back to the Mission.', None, None, [hook_maui])
+                 'You found Maui’s hook, but first you have to put the shell in the hole'
+                 '\nwith the shell to get the hook. '
+                 '\nYou can go back to southeast to go back to the Mission.', None, None, None)
 crab_layer = Room("Crab's Layer", None, None, None, 'rilm_of_monster', None, None, None, None, None, None,
                   'You are in the crab’s layer. \nIf you don’t leave, you will died. '
                   '\nThe only exit is back to the west.', None, [shiny])
@@ -567,13 +569,15 @@ while True:
         print()
     if len(player.location.characters) > 0:
         print()
-        print("You can talk to characters.\nAll you have to do is type 'talk to' "
-              "\nand whoever you want and you can talk to them. \nYou can talk to:")
+        print("You need talk to characters.\nAll you have to do is type 'talk to' "
+              "\nand you can talk to them. \nYou need talk to:")
         for num, character in enumerate(player.location.characters):   # Ask Wiebe why the pep happens
             print(str(num + 1) + ") " + character.name)
     elif len(player.location.characters) == 'None':
         print("There are no characters here.")
-
+    # Timer Starts
+    if player.location == crab_layer:
+        a = datetime.datetime.now()
     command = input('>_ ').strip().lower()
 
     # handles specific events before processing
@@ -583,13 +587,27 @@ while True:
         pos = short_directions.index(command)
         command = directions[pos]
 
+    # Timer stops
+    check_movement = False
+    if player.location == crab_layer:
+        b = datetime.datetime.now()
+        check_movement = True
+        duration_object = b - a
+        if duration_object.days != 0 or duration_object.seconds > 10:
+            print("You stayed to long.\n"
+                  "You died. Game Over.")
+            quit(0)
     # Movement
-    if command in directions:
+    elif command in directions:
         try:
             player.move(command)
         except KeyError:
             print("You cannot go that way.")
-
+    if check_movement:
+        if player.location == crab_layer:
+            print("You stayed to long.\n"
+                  "You died. Game Over.")
+            quit(0)
     # Talk to other character
     elif 'talk to' in command:
         character_name = command[8:]  # Finds the string of the character
@@ -785,22 +803,41 @@ while True:
         print()
 
 # Shell
-    elif command == 'put shell':
+    elif command == 'put shell in hole':
         if player.location == maui_hook:
+            if shell not in player.inventory:
+                print("You don't have the shell.")
             shell_found = True
             hook_maui1 = False
             for item in player.inventory:
-                if isinstance(item, MauiHook):
+                if isinstance(item, Shell):
                     shell_found = True
                     hook_maui1 = False
-                    player.take(hook_maui)
                     print("The hole lowers and....")
                     print("Maui's hook pops out!")
+                    player.take(hook_maui)
                     time.sleep(SLEEP_TIME / 2)
                     player.inventory.remove(shell)
 
-        if shell not in player.inventory:
-            print("You don't have the shell.")
+# Note
+    elif command == 'read note':
+        if player.location == mission:
+            print()
+            print("Hint:\n"
+                  "You thankful pick up this note.\n"
+                  "You must have these 3 items to defeat Taca:\n"
+                  "1) Maui's Hook\n"
+                  "2) Grandma's Necklace\n"
+                  "3) Te Fiti's Heart\n"
+                  "Your Welcome")
+            time.sleep(2)
+
+# Dying in Rooms
+
+
+# Give Ball to Boy
+    elif player.location == villager_homes:
+
 # Inventory
     elif command == 'i':
         print("Your Inventory is:")
