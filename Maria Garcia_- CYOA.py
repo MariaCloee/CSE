@@ -1,5 +1,6 @@
 import time
 import datetime
+import webbrowser
 # Order:
 # - import statements (might)
 # - class definition
@@ -597,17 +598,14 @@ while True:
             print("You stayed to long.\n"
                   "You died. Game Over.")
             quit(0)
+
     # Movement
     elif command in directions:
         try:
             player.move(command)
         except KeyError:
             print("You cannot go that way.")
-    if check_movement:
-        if player.location == crab_layer:
-            print("You stayed to long.\n"
-                  "You died. Game Over.")
-            quit(0)
+
     # Talk to other character
     elif 'talk to' in command:
         character_name = command[8:]  # Finds the string of the character
@@ -832,11 +830,18 @@ while True:
                   "Your Welcome")
             time.sleep(2)
 
-# Dying in Rooms
-
 
 # Give Ball to Boy
     elif player.location == villager_homes:
+        if command == 'talk to villagers':
+            if ball in player.inventory:
+                player.inventory.remove(ball)
+                print("You gave the ball to the little boy.")
+                print("Boy: Thank you.")
+
+            elif ball not in player.inventory:
+                print("You don't have the Child's ball.")
+
 
 # Inventory
     elif command == 'i':
@@ -886,6 +891,14 @@ while True:
         else:
             player.location.items.append(dropped)
             time.sleep(SLEEP_TIME)
+    elif command == 'open':
+        webbrowser.open("www.youtube.com")
 
     else:
         print("Command not recognized.")
+
+    if check_movement:
+        if player.location == crab_layer:
+            print("You stayed to long.\n"
+                  "You died. Game Over.")
+            quit(0)
