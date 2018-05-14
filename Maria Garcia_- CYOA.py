@@ -678,7 +678,18 @@ while True:
                 print("%s: Can I have the sack little boy?" % player.name)
                 print("Boy: You can have it if you give me a blue ball that is really bounces. "
                       "Can you you give me a ball?")
-                time.sleep(time_between)
+                # Give Ball to Boy
+                for item in player.inventory:
+                    answer = input(">_ ")
+                    if answer == 'I will give the ball.':
+                        if ball in player.inventory:
+                            player.inventory.remove(ball)
+                            print("You gave the ball to the little boy.")
+                            print("Boy: Thank you.")
+
+                        elif ball not in player.inventory:
+                            print("You don't have the Child's ball.")
+                    time.sleep(time_between)
 
 # Take
     elif 'take' in command:
@@ -829,18 +840,6 @@ while True:
                   "3) Te Fiti's Heart\n"
                   "Your Welcome")
             time.sleep(2)
-
-
-# Give Ball to Boy
-    elif player.location == villager_homes:
-        if command == 'talk to villagers':
-            if ball in player.inventory:
-                player.inventory.remove(ball)
-                print("You gave the ball to the little boy.")
-                print("Boy: Thank you.")
-
-            elif ball not in player.inventory:
-                print("You don't have the Child's ball.")
 
 
 # Inventory
