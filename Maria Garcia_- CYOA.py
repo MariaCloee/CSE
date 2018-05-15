@@ -435,7 +435,7 @@ cellar = Room("Cellar", None, None, None, None, None, 'grandma_house', None, Non
 villager_homes = Room("Villager's Homes", None, None, None, 'grandma_house', None, None, None, 'fishing_area',
                       None, None,
                       'This is where all the villagers sleep and play. \nThere are 2 paths: west and northwest.',
-                      [villagers], None, [sack, water_bottle])
+                      [villagers], None, [water_bottle])
 palm_trees = Room("Palm Trees", None, None, 'moana_house', 'other_ocean_shore', None, None, None, None,
                   'chief_stones',
                   None,
@@ -459,7 +459,7 @@ ocean_shore = Room("Ocean Shore", 'into_ocean', 'moana_house', 'fishing_area', N
                    'The name says it all. \nThis is where the ocean shore is at and where the beach is at.\n'
                    'There is paths in all main directions: \nnorth, east, south, and west. West is blocked by a door.',
                    None, [ocean, villagers], [shell])
-fishing_area = Room("Fishing Area", None, None, None, 'waterfall', None, None, None, None, 'villagers_homes', None,
+fishing_area = Room("Fishing Area", None, None, None, 'waterfall', None, None, None, None, 'villager_homes', None,
                     'This is where there are fishing nets and \n2 paths to the west and to the southeast. '
                     '\nAlso, there are some boats with paddles.', None, [ocean, villagers], [fishing_boats])
 into_ocean = Room("Into the Ocean", 'rilm_of_monster', 'ocean_shore', 'taca', 'island', None, None, 'Kakamora', None,
@@ -679,17 +679,26 @@ while True:
                 print("Boy: You can have it if you give me a blue ball that is really bounces. "
                       "Can you you give me a ball?")
                 # Give Ball to Boy
-                for item in player.inventory:
-                    answer = input(">_ ")
-                    if answer == 'I will give the ball.':
+                answer = input(">_ ")
+                correct = 'give ball'
+                if correct in answer:
+                    found = False
+                    for item in player.inventory:
+                        if isinstance(item, Ball):
+                            found = True
                         if ball in player.inventory:
                             player.inventory.remove(ball)
                             print("You gave the ball to the little boy.")
                             print("Boy: Thank you.")
-
-                        elif ball not in player.inventory:
+                            player.inventory.append(sack)
+                            print("The boy gave you the sack.")
+                            print("Your Inventory is:")
+                            for num, thing in enumerate(player.inventory):
+                                print(str(num + 1) + ") " + thing.name)
+                                time.sleep(1.5)
+                    if found is False:
                             print("You don't have the Child's ball.")
-                    time.sleep(time_between)
+
 
 # Take
     elif 'take' in command:
