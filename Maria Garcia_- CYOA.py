@@ -428,8 +428,9 @@ chief_stones = Room("Chief's Stones Mountains", 'moana_house', None, None, None,
                                               '\nThere is only a pile of stones and paths to the \nnorth '
                                               'and northwest and northeast.', [dad], None, [chief_hat])
 grandma_house = Room("Grandma's House", None, None, 'villager_homes', 'moana_house', 'cellar', None, None, None, None,
-                     'chief_stones', 'Grandma lives and there are 3 exits: \nwest, southwest and east.', [grandma],
-                     None, [stick, necklace, rug])    # fix
+                     'chief_stones', 'Grandma lives and there are 3 exits: \nwest, southwest and east. '
+                                     'There is a rug in the middle of the room.', [grandma],
+                     None, [stick, necklace])
 cellar = Room("Cellar", None, None, None, None, None, 'grandma_house', None, None, None, None,
               'There is a treasure chest. The treasure is open. Inside there is a key.', None, None, [treasure, key])
 villager_homes = Room("Villager's Homes", None, None, None, 'grandma_house', None, None, None, 'fishing_area',
@@ -699,7 +700,6 @@ while True:
                     if found is False:
                             print("You don't have the Child's ball.")
 
-
 # Take
     elif 'take' in command:
         take_name = command[5:]
@@ -850,9 +850,14 @@ while True:
                   "Your Welcome")
             time.sleep(2)
 
+# Rug
+    elif command == 'move rug':
+        if player.location == grandma_house:
+            print("You found a place called the Cellar.")
+            player.location.name.append(cellar)
 
 # Inventory
-    elif command == 'i':
+    elif command == 'i' or 'inventory':
         print("Your Inventory is:")
         for num, item in enumerate(player.inventory):
             print(str(num + 1) + ") " + item.name)
@@ -899,6 +904,8 @@ while True:
         else:
             player.location.items.append(dropped)
             time.sleep(SLEEP_TIME)
+
+# Open Youtube
     elif command == 'open':
         webbrowser.open("www.youtube.com")
 
