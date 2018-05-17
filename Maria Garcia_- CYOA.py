@@ -277,6 +277,12 @@ class Character(object):
         self.damage = dmg
         self.alive = True
         self.location = None
+        self.first_time = True
+        self.first_time1 = True
+        self.first_time2 = True
+        self.first_time3 = True
+        self.first_time4 = True
+        self.first_time5 = True
 
     def take(self, item_object):
         if len(self.inventory) >= 10:
@@ -360,6 +366,12 @@ class Room(object):
         self.characters = characters
         self.non_talk_characters = non_talk_characters
         self.items = items
+        self.first_time = True
+        self.first_time1 = True
+        self.first_time2 = True
+        self.first_time3 = True
+        self.first_time4 = True
+        self.first_time5 = True
 
 
 # Items:
@@ -432,7 +444,8 @@ grandma_house = Room("Grandma's House", None, None, 'villager_homes', 'moana_hou
                                      'There is a rug in the middle of the room.', [grandma],
                      None, [stick, necklace])
 cellar = Room("Cellar", None, None, None, None, None, 'grandma_house', None, None, None, None,
-              'There is a treasure chest. The treasure is open. Inside there is a key.', None, None, [treasure, key])
+              'There is a treasure chest. The treasure is open. The treasure is empty except that there is '
+              'a key.', None, None, [key])
 villager_homes = Room("Villager's Homes", None, None, None, 'grandma_house', None, None, None, 'fishing_area',
                       None, None,
                       'This is where all the villagers sleep and play. \nThere are 2 paths: west and northwest.',
@@ -618,7 +631,10 @@ while True:
             print("Invalid character")
         else:
             time_between = 10
-            if character == moana:
+            if character == moana and player.first_time is False:
+                print("You already talk to Moana.")
+
+            if character == moana and player.first_time is True:
                 print("Moana: Hi. \n"
                       "Moana: Welcome to the Save The World Game. Your goal is to find Te Fift and defeat Taca.\n"
                       "You have to collect series of items along the way. \nThere are some items that are necessary"
@@ -633,7 +649,12 @@ while True:
                     print("Lets Go!!")
                 elif response == "no" or "maybe":
                     print("Moana: You can do it. Let's Go!!")
-            elif character == malawi:
+                player.first_time = False
+
+            elif character == malawi and player.first_time1 is False:
+                print("You already talk to Malawi.")
+
+            elif character == malawi and player.first_time1 is True:
                 print("Malawi: Hi. \n"
                       "Malawi: Welcome to the Save The World Game. Your goal is to find Te Fift and defeat Taca.\n"
                       "You have to collect series of items along the way. \nThere are some items that are necessary"
@@ -649,18 +670,31 @@ while True:
                     print("Malawi: Lets Go!!")
                 elif response == "no" or "maybe" or "maybe so":
                     print("Malawi: You can do it. Let's Go!!")
-            elif character == mom:
+                player.first_time = False
+
+            elif character == mom and player.first_time2 is False:
+                print("You already talk to Mom.")
+
+            elif character == mom and player.first_time2 is True:
                 print("Mom: You can do it great warrior. \nI will give you a clue to your quest. Find the sack first.\n"
                       "It will help you carry things along the way. \nHere is a riddle to find the sack: "
                       "The sack will be near the pack. Where is the pack?")
                 # sack = villagers homes
                 time.sleep(time_between)
+                player.first_time = False
 
-            elif character == dad:
+            elif character == dad and player.first_time3 is False:
+                print("You already talk to Dad.")
+
+            elif character == dad and player.first_time3 is True:
                 print("Dad: Welcome to the Chief's Stones Mountains.")   # Add more dialogue with Dad
                 time.sleep(time_between)
+                player.first_time = False
 
-            elif character == grandma:
+            elif character == grandma and player.first_time4 is False:
+                print("You already talk to Grandma.")
+
+            elif character == grandma and player.first_time4 is True:
                 print("Grandma: Hello my darling. \nYou have been chosen to deliver Maui across the ocean.")
 
                 if player == moana:
@@ -673,8 +707,31 @@ while True:
                 print("Grandma: I will give you a hint to finding the items: \n"
                       "Some items are in my house. You can do it.")
                 time.sleep(time_between)
+                player.first_time = False
 
-            elif character == villagers:
+            elif character == villagers and player.first_time5 is False:
+                print("Can you you give me a ball?")
+                answer = input(">_ ")
+                correct = 'give ball'
+                if correct in answer:
+                    found = False
+                    for item in player.inventory:
+                        if isinstance(item, Ball):
+                            found = True
+                        if ball in player.inventory:
+                            player.inventory.remove(ball)
+                            print("You gave the ball to the little boy.")
+                            print("Boy: Thank you.")
+                            player.inventory.append(sack)
+                            print("The boy gave you the sack.")
+                            print("Your Inventory is:")
+                            for num, thing in enumerate(player.inventory):
+                                print(str(num + 1) + ") " + thing.name)
+                                time.sleep(1.5)
+                    if found is False:
+                            print("You don't have the Child's ball.")
+
+            elif character == villagers and player.first_time5 is True:
                 print("**Narrator**: A little boy is near you and he has an item you need: the sack.")
                 print("%s: Can I have the sack little boy?" % player.name)
                 print("Boy: You can have it if you give me a blue ball that is really bounces. "
@@ -854,7 +911,10 @@ while True:
     elif command == 'move rug':
         if player.location == grandma_house:
             print("You found a place called the Cellar.")
-            player.location.name.append(cellar)
+            player.location.down = 'cellar'
+            if player.location.down == 'cellar':
+                player.location.description = 'Grandma lives and there are 4 exits: west, southwest,\n' \
+                                              'now down (to the cellar) and east. There is a rug that was moved. '
 
 # Inventory
     elif command == 'i' or 'inventory':
