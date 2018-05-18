@@ -43,6 +43,14 @@ class Consumables(Item):
         print("%s is eating the %s" % (person.name, self.name))
 
 
+class FruitBowl(Consumables):
+    def __init__(self, name, value, color):
+        super(FruitBowl, self).__init__(name, value, color)
+
+    def combine(self, person):
+        print("%s combined the %s with the %s." % (person.name, self.name, self.name))
+
+
 class Fruits(Consumables):
     def __init__(self, name, value, color, taste):
         super(Fruits, self).__init__(name, value, color)
@@ -401,6 +409,7 @@ heart = Heart("Te Fift's Heart", 'creates life or destroys life', 'glowing green
 hook_maui = MauiHook("Maui's Hook", 'Will help you defeat Taca.', 'White with blue handle', 'Hook Shape')
 bowl = Bowl('Round Bowl', 'Use for put things like fruit in.', 'Gray that shines', 'Small bowl that may '
                                                                                    'fit in a small sack.')
+fruitbowl = FruitBowl('FruitBowl', 'Great for minimizing your inventory. 3 for 1.', 'Colorful')
 
 # Characters:
 moana = Character('Moana', "She has the power to find Maui and deliver him across the ocean.\n"
@@ -419,8 +428,8 @@ villagers = Character('Villagers', 'They work and play around the island. \nThey
                       10)
 mom = Character('Mom', 'She supports Moana, but follows what the chief says.\n She is the leaders of the village. '
                        'She will support you.', 100, 'willing')
-dad = Character('Chief or Dad', 'He doesn’t want Moana to go to the ocean. \nHe is the chief of the island. '
-                                '\nHer dad knows every inch of Chief Mountain.', 100, 'serious and loving')
+dad = Character('Dad', 'He doesn’t want Moana to go to the ocean. \nHe is the chief of the island. '
+                '\nHer dad knows every inch of Chief Mountain.', 100, 'serious and loving')
 ocean = Character('Ocean', 'It is Moana friend. It helps Moana throughout the journey.', 1000, 'caring', 10)
 kakamora = Character('Kakamora', 'Coconuts that are evil. \nThey will kill you unless you give them the heart. '
                                  'DON’T GIVE THEM THE HEART. \nFIGHT OR BAIL!', 1000, 'angry', 25)
@@ -456,7 +465,7 @@ palm_trees = Room("Palm Trees", None, None, 'moana_house', 'other_ocean_shore', 
                   'You are surrounded by palm trees with coconuts. \nThere is a tree to your left that has a low '
                   '\nbranch and only one coconut. There are 4 paths: \nwest to ocean shore, east is a path,\n'
                   'southeast is a path up the mountain, and \nnorth is a block by rocks that are not movable.',
-                  None, [villagers], [mango, the_coconuts])
+                  None, [villagers], [banana, mango, the_coconuts])
 up_tree = Room("Up the Tree", None, None, None, None, None, None, None, None, None, None,
                "You are up the tree and to your left you see the ocean. \nTo your left, there is a coconut on a tree "
                "that's the only coconut there.", None, None, [magic_coconut])
@@ -670,7 +679,7 @@ while True:
                     print("Malawi: Lets Go!!")
                 elif response == "no" or "maybe" or "maybe so":
                     print("Malawi: You can do it. Let's Go!!")
-                player.first_time = False
+                player.first_time1 = False
 
             elif character == mom and player.first_time2 is False:
                 print("You already talk to Mom.")
@@ -681,7 +690,7 @@ while True:
                       "The sack will be near the pack. Where is the pack?")
                 # sack = villagers homes
                 time.sleep(time_between)
-                player.first_time = False
+                player.first_time2 = False
 
             elif character == dad and player.first_time3 is False:
                 print("You already talk to Dad.")
@@ -689,7 +698,7 @@ while True:
             elif character == dad and player.first_time3 is True:
                 print("Dad: Welcome to the Chief's Stones Mountains.")   # Add more dialogue with Dad
                 time.sleep(time_between)
-                player.first_time = False
+                player.first_time3 = False
 
             elif character == grandma and player.first_time4 is False:
                 print("You already talk to Grandma.")
@@ -707,7 +716,7 @@ while True:
                 print("Grandma: I will give you a hint to finding the items: \n"
                       "Some items are in my house. You can do it.")
                 time.sleep(time_between)
-                player.first_time = False
+                player.first_time4 = False
 
             elif character == villagers and player.first_time5 is False:
                 print("Can you you give me a ball?")
@@ -756,7 +765,7 @@ while True:
                                 time.sleep(1.5)
                     if found is False:
                             print("You don't have the Child's ball.")
-
+                player.first_time5 = False
 # Take
     elif 'take' in command:
         take_name = command[5:]
@@ -876,6 +885,24 @@ while True:
     elif command == 'clues':
         clues()
         print()
+
+# Put Fruit in Bowl
+    elif command == 'combine':
+        if player.inventory == mango and banana and bowl:         # Fix
+            print("Do you want to minimize your inventory:")
+            response1 = input(">_ ")
+            if response1 == 'yes':
+                print("You combine the fruits with the bowl.")
+                print("It turned into A ... FruitBowl!")
+                print('It takes your fruits and your bowl and')
+                player.inventory.remove(mango)
+                player.inventory.remove(banana)
+                player.inventory.remove(bowl)
+                player.inventory.append(fruitbowl)
+            if response1 != 'yes':
+                print("Okay! You lost your chance.")
+        if player.inventory != mango and banana and bowl:
+            print("You don't have all three items.")
 
 # Shell
     elif command == 'put shell in hole':
