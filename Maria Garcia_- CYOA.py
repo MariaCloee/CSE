@@ -875,6 +875,8 @@ while True:
     elif player.location == te_fiti:
         quit(0)
 
+# The other ocean shore door opening wit key    # Fix
+
 # Tree
     elif command == 'climb tree':
         player.location = up_tree
@@ -887,22 +889,33 @@ while True:
         print()
 
 # Put Fruit in Bowl
-    elif command == 'combine':
-        if player.inventory == mango and banana and bowl:         # Fix
-            print("Do you want to minimize your inventory:")
-            response1 = input(">_ ")
-            if response1 == 'yes':
-                print("You combine the fruits with the bowl.")
-                print("It turned into A ... FruitBowl!")
-                print('It takes your fruits and your bowl and')
-                player.inventory.remove(mango)
-                player.inventory.remove(banana)
-                player.inventory.remove(bowl)
-                player.inventory.append(fruitbowl)
-            if response1 != 'yes':
-                print("Okay! You lost your chance.")
+    elif command == 'combine':         
+        print("Do you want to minimize your inventory:")
+        response1 = input(">_ ")
+        if response1 == 'yes':
+            found = False
+            for item in player.inventory:
+                if isinstance(item, Fruits):
+                    found = True
+                    player.inventory.remove(mango)
+                    player.inventory.remove(banana)
+                    player.inventory.remove(bowl)
+                    player.inventory.append(fruitbowl)
+                    print("You combine the fruits with the bowl.")
+                    print("It turned into A ... FruitBowl!")
+                    print('It takes your fruits and your bowl and')
+        if response1 != 'yes':
+            print("Okay! You lost your chance.")
         if player.inventory != mango and banana and bowl:
             print("You don't have all three items.")
+
+# Another way to do inventory
+#     elif command == 'inventory 1':
+#         try:
+#             for item in player.inventory:
+#                 print(item.name)
+#         except KeyError:
+#             print("You don't have that item.")
 
 # Shell
     elif command == 'put shell in hole':
