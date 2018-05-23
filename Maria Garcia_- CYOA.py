@@ -446,9 +446,9 @@ moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_hous
                                      'ocean shore, and south is a path.', [moana, malawi, mom], None, [bowl, ball])
 chief_stones = Room("Chief's Stones Mountains", 'moana_house', None, None, None, None, None, 'grandma_house',
                     'palm_trees', None, None, 'You have arrived to a sacred place only for chiefs. '
-                                              '\nThere is only a pile of stones and paths to the \nnorth '
+                                              '\nThere is only a pile of stones, a chief hat, and paths to the \nnorth '
                                               'and northwest and northeast.', [dad], None, [chief_hat])
-grandma_house = Room("Grandma's House", None, None, 'villager_homes', 'moana_house', 'cellar', None, None, None, None,
+grandma_house = Room("Grandma's House", None, None, 'villager_homes', 'moana_house', None, None, None, None, None,
                      'chief_stones', 'Grandma lives and there are 3 exits: \nwest, southwest and east. '
                                      'There is a rug in the middle of the room.', [grandma],
                      None, [stick, necklace])
@@ -875,7 +875,31 @@ while True:
     elif player.location == te_fiti:
         quit(0)
 
-# The other ocean shore door opening wit key    # Fix
+# The other ocean shore door opening with key    # Fix
+    elif 'key' in command:
+        if player.location == other_ocean_shore or ocean_shore:
+            if player.inventory == key:
+                print("You are at:")
+                if player.location == other_ocean_shore:
+                    print("The Other Ocean Shore.")
+                if player.location == ocean_shore:
+                    print("The Ocean Shore.")
+                print("You have a key to open the doors at the other ocean shore and ocean shore. \n"
+                      "You need to open one place to open both places.")
+                print("You put the key in the hole....")
+                if player.location == other_ocean_shore or ocean_shore:
+                    player.location.north.append(waterfall)
+                    player.location.west.append(hidden_cave)
+                print("You have open 2 new places called: THe Hidden Cave and the Waterfall.")
+                if player.location == other_ocean_shore:
+                    player.location.description = 'It is other ocean shore with the waterfall a path to the east, ' \
+                                                   '\n and a path to the north that is now open.'
+                if player.location == ocean_shore:
+                    player.location.description = 'The name says it all. \nThis is where the ocean ' \
+                                                  'shore is at and where the beach is at.\n' \
+                                                  'There is paths in all main directions: \nnorth, east, south, ' \
+                                                  'and west. West is now open.'
+
 
 # Tree
     elif command == 'climb tree':
@@ -889,7 +913,7 @@ while True:
         print()
 
 # Put Fruit in Bowl
-    elif command == 'combine':         
+    elif command == 'combine':
         print("Do you want to minimize your inventory:")
         response1 = input(">_ ")
         if response1 == 'yes':
