@@ -482,8 +482,8 @@ ocean_shore = Room("Ocean Shore", 'into_ocean', 'moana_house', 'fishing_area', N
                    'The name says it all. \nThis is where the ocean shore is at and where the beach is at.\n'
                    'There is paths in all main directions: \nnorth, east, south, and west. West is blocked by a door.',
                    None, [ocean, villagers], [shell])
-fishing_area = Room("Fishing Area", None, None, None, 'waterfall', None, None, None, None, 'villager_homes', None,
-                    'This is where there are fishing nets and \n2 paths to the west and to the southeast. '
+fishing_area = Room("Fishing Area", None, None, None, None, None, None, None, None, 'villager_homes', None,
+                    'This is where there are fishing nets and \nonly one path to the southeast. '
                     '\nAlso, there are some boats with paddles.', None, [ocean, villagers], [fishing_boats])
 into_ocean = Room("Into the Ocean", 'rilm_of_monster', 'ocean_shore', 'taca', 'island', None, None, 'Kakamora', None,
                   None,
@@ -545,6 +545,7 @@ while not selection_complete:
 
 
 def clues():
+    print("------------------------------------------------------------------------------------------------------")
     print("%s cheat sheets:\n" % player.name)
     print("Here is the commands you can type to get and use things:\n"
           "1) type 'i' to see your inventory\n"
@@ -579,20 +580,19 @@ elif player == malawi:
 # Main Game
 while True:
     # Room information
-    print()
+    print("------------------------------------------------------------------------------------------------------")
     print(player.location.name)
     print(player.location.description)
 
     if len(player.location.items) > 0:
-        print()
+        print("------------------------------------------------------------------------------------------------------")
         print("You can take and drop items from your inventory.\n"
               "You have to type the exact name shown below to take and drop item. \n"
               "The following items are here:")
         for num, item in enumerate(player.location.items):
             print(str(num + 1) + ") " + item.name)
-        print()
     if len(player.location.characters) > 0:
-        print()
+        print("------------------------------------------------------------------------------------------------------")
         print("You need talk to characters.\nAll you have to do is type 'talk to' "
               "\nand you can talk to them. \nYou need talk to:")
         for num, character in enumerate(player.location.characters):   # Ask Wiebe why the pep happens
@@ -908,9 +908,13 @@ while True:
     elif command == 'climb back down':
         player.location = palm_trees
 # Clues
-    elif command == 'clues':
+    elif 'clues' in command:
         clues()
-        print()
+
+# After taking Key
+    elif player.inventory == key:
+        if player.location == cellar:
+            player.location.description = 'There is a treasure chest. The treasure is open. The treasure is empty.'
 
 # Put Fruit in Bowl
     elif command == 'combine':
@@ -961,7 +965,8 @@ while True:
 # Note
     elif command == 'read note':
         if player.location == mission:
-            print()
+            print("--------------------------------------------------------------------------------------------"
+                  "----------")
             print("Hint:\n"
                   "You thankful pick up this note.\n"
                   "You must have these 3 items to defeat Taca:\n"
