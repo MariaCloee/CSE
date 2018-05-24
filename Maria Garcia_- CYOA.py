@@ -484,7 +484,7 @@ ocean_shore = Room("Ocean Shore", 'into_ocean', 'moana_house', 'fishing_area', N
 fishing_area = Room("Fishing Area", None, None, None, None, None, None, None, None, 'villager_homes', None,
                     'This is where there are fishing nets and \nonly one path to the southeast. '
                     '\nAlso, there are some boats with paddles.', None, [ocean, villagers], [fishing_boats])
-into_ocean = Room("Into the Ocean", 'rilm_of_monster', 'ocean_shore', 'taca', 'island', None, None, 'Kakamora', None,
+into_ocean = Room("Into the Ocean", 'rilm_of_monster', 'ocean_shore', 'taca', 'island', None, None, 'coconuts', None,
                   None,
                   None, 'You are in the middle of the ocean. \nThere are 5 directions: west, north, east, northeast, '
                         'and back '
