@@ -453,8 +453,7 @@ grandma_house = Room("Grandma's House", None, None, 'villager_homes', 'moana_hou
                                      'There is a rug in the middle of the room.', [grandma],
                      None, [stick, necklace])
 cellar = Room("Cellar", None, None, None, None, None, 'grandma_house', None, None, None, None,
-              'There is a treasure chest. The treasure is open. The treasure is empty except that there is '
-              'a key.', None, None, [key])
+              'There is a treasure chest. The treasure is open. The treasure has something in it.', None, None, [key])
 villager_homes = Room("Villager's Homes", None, None, None, 'grandma_house', None, None, None, 'fishing_area',
                       None, None,
                       'This is where all the villagers sleep and play. \nThere are 2 paths: west and northwest.',
@@ -470,7 +469,7 @@ up_tree = Room("Up the Tree", None, None, None, None, None, None, None, None, No
                "You are up the tree and to your left you see the ocean. \nTo your left, there is a coconut on a tree "
                "that's the only coconut there.", None, None, [magic_coconut])
 other_ocean_shore = Room("The Other Ocean Shore", None, None, 'palm_trees', None, None, None, None, None, None, None,
-                         'It is other ocean shore with the waterfall a path to the east,'
+                         'It is other ocean shore with a path to the east,'
                          '\n and a path to the north that is blocked by a door.', None, [ocean], None)
 waterfall = Room("Waterfall", None, 'other_ocean_shore', 'hidden_cave', None, None, None, None, None, None, None,
                  ' There is a waterfall leading to the other ocean shore to the south.  '
@@ -875,31 +874,34 @@ while True:
     elif player.location == te_fiti:
         quit(0)
 
-# The other ocean shore door opening with key    # Fix
-    elif 'key' in command:
-        if player.location == other_ocean_shore or ocean_shore:
-            if player.inventory == key:
-                print("You are at:")
-                if player.location == other_ocean_shore:
-                    print("The Other Ocean Shore.")
-                if player.location == ocean_shore:
-                    print("The Ocean Shore.")
-                print("You have a key to open the doors at the other ocean shore and ocean shore. \n"
-                      "You need to open one place to open both places.")
-                print("You put the key in the hole....")
-                if player.location == other_ocean_shore or ocean_shore:
-                    player.location.north.append(waterfall)
-                    player.location.west.append(hidden_cave)
-                print("You have open 2 new places called: THe Hidden Cave and the Waterfall.")
-                if player.location == other_ocean_shore:
-                    player.location.description = 'It is other ocean shore with the waterfall a path to the east, ' \
+# The other ocean shore door opening with key
+    elif 'open door' in command:
+        if key in player.inventory:
+            print("You have a key to open the door at the:")
+            if player.location == ocean_shore:
+                print("The Ocean Shore")
+            if player.location == other_ocean_shore:
+                print("The Other Ocean Shore")
+            print("You put the key in the hole....")
+            if player.location == other_ocean_shore:
+                player.location.north = 'waterfall'
+                print("You have open 1 new place called: the Waterfall.")
+                print("You kept the key.")
+                if player.location.north == 'waterfall':
+                    player.location.description = 'It is other ocean shore with the waterfall to the north,' \
+                                                  ' a path to the east, ' \
                                                    '\n and a path to the north that is now open.'
-                if player.location == ocean_shore:
+            if player.location == ocean_shore:
+                player.location.west = 'hidden_cave'
+                print("You have open 1 new place called: the Hidden Cave")
+                print("You kept the key.")
+                if player.location.west == 'hidden_cave':
                     player.location.description = 'The name says it all. \nThis is where the ocean ' \
                                                   'shore is at and where the beach is at.\n' \
-                                                  'There is paths in all main directions: \nnorth, east, south, ' \
-                                                  'and west. West is now open.'
-
+                                                      'There is paths in all main directions: \nnorth, east, south, ' \
+                                                      'and west. West is now open.'
+        if key not in player.inventory:
+            print("You don't have the Magical Key.")
 
 # Tree
     elif command == 'climb tree':
@@ -910,11 +912,6 @@ while True:
 # Clues
     elif 'clues' in command:
         clues()
-
-# After taking Key
-    elif player.inventory == key:
-        if player.location == cellar:
-            player.location.description = 'There is a treasure chest. The treasure is open. The treasure is empty.'
 
 # Put Fruit in Bowl
     elif command == 'combine':
