@@ -318,6 +318,26 @@ class Character(object):
         print("You are losing! What are you going to do to stop the fight and defeat Taca? Fight or...")
 # Finish Fight Scene
 
+    def keep_fighting(self):
+        print(self.name)
+        command4 = input(">_ ".lower().strip())
+        if command4 == 'kill' or 'attack':
+            player.fight_taca(player)
+
+    def showing_heart(self):
+        print(self.name)
+        command4 = input(">_ ".lower().strip())
+        if command4 == 'show heart':
+            heart_name = command[5:]
+            for item1 in player.inventory:
+                if heart_name == item1.name.lower():
+                    player.take(item1)
+                    heart_name = item1
+            player.inventory.remove(heart)
+            print("%s showed %s." % (player.name, heart.name))
+            print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
+            player.location = te_fiti
+
     def read(self):
         self.state = "happy"
         print("Reading.")
@@ -389,7 +409,7 @@ magic_coconut = Coconuts('Magic Coconut', 'Valuable', 'brown with white', None)
 the_coconuts = Coconuts('Coconuts', '$5', 'brown', 'There is water inside the coconuts to drink.')
 water_bottle = Water('Water Bottle', '$3', 'clear')
 drum = Drum("Magic Drum", 'Shows you the truth', 'wood brown')
-chief_hat = ChiefHat("Chief Hat", 'Makes you head of the village', 'Medium', 'Red & White & Light Brown')
+# chief_hat = ChiefHat("Chief Hat", 'Makes you head of the village', 'Medium', 'Red & White & Light Brown')
 stick = Stick("Grandma's Stick", 'Helps you along the way.', 'Light tan', 'Long')
 necklace = Necklace("Grandma's Necklace", 'You need it to store the heart', 'Blue, White, and aqua', 'small',
                     '15 beads')
@@ -447,7 +467,7 @@ moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_hous
 chief_stones = Room("Chief's Stones Mountains", 'moana_house', None, None, None, None, None, 'grandma_house',
                     'palm_trees', None, None, 'You have arrived to a sacred place only for chiefs. '
                                               '\nThere is only a pile of stones, a chief hat, and paths to the \nnorth '
-                                              'and northwest and northeast.', [dad], None, [chief_hat])
+                                              'and northwest and northeast.', [dad], None, None)
 grandma_house = Room("Grandma's House", None, None, 'villager_homes', 'moana_house', None, None, None, None, None,
                      'chief_stones', 'Grandma lives and there are 3 exits: \nwest, southwest and east. '
                                      'There is a rug in the middle of the room.', [grandma],
@@ -547,7 +567,7 @@ def clues():
     print("------------------------------------------------------------------------------------------------------")
     print("%s cheat sheets:\n" % player.name)
     print("Here is the commands you can type to get and use things:\n"
-          "1) type 'i' to see your inventory\n"
+          "1) type 'inventory' to see your inventory\n"
           "2) type 'take[item name]' to take an item\n"
           "3) type 'drop[item name]' to drop an item\n"
           "4) type 'north' or 'n' to go north\n"
@@ -564,7 +584,6 @@ def clues():
           "15) type 'put' or 'leave' to put and drop things to and from your sack. \n"
           "16) type 'climb[item name]' to climb things.\n"
           "17) type 'clues' to show this again")
-    time.sleep(5)
 
 
 # clues()     # Redo this
@@ -809,21 +828,21 @@ while True:
             elif heart_found is None:
                 print("Heart not found.")
             else:
-                print("You don't have that item.")
+                print("You don't have Magic Coconut.")
 
 # Find Maui
     elif 'find' in command:
         find_name = command[5:]
         found = None
-        for chars in player.location.non_talk_characters:
-            if find_name == chars.name.lower():
-                player.pep_with_you.append(chars)
-                found = chars
+        for objects in player.location.non_talk_characters:
+            if find_name == objects.name.lower():
+                player.pep_with_you.append(objects)
+                found = objects
                 print("%s found %s. \nNow %s will be with you at all times \nand you can use %s for many things." %
-                      (player.name, chars.name, chars.name, chars.name))
+                      (player.name, objects.name, objects.name, objects.name))
                 print("Here is/are the people with you:")
-                for num, charas in enumerate(player.pep_with_you):
-                    print(str(num + 1) + ") " + charas.name)
+                for num, thing in enumerate(player.pep_with_you):
+                    print(str(num + 1) + ") " + thing.name)
         if found is None:
             print("Maui is not in this room.")
         else:
@@ -841,32 +860,36 @@ while True:
         elif necklace not in player.inventory:
             print("You don't have Grandma's Necklace.")
         elif maui in player.pep_with_you:
-            player.fight_taca(player)
-            command4 = input(">_ ".lower().strip())
-            if command4 == 'show heart':
-                    heart_name = command[5:]
-                    for item1 in player.inventory:
-                        if heart_name == item1.name.lower():
-                            player.take(item1)
-                            heart_name = item1
-                    player.inventory.remove(heart)
-                    print("%s showed %s." % (player.name, heart.name))
-                    print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
-                    player.location = te_fiti
-            while command4 == 'kill' or 'attack':
-                attack_name = command[5:]
+            while TACA.health != 0:
                 player.fight_taca(player)
-                command4 = input(">_ ".lower().strip())
-                if command4 == 'show heart':
-                    heart_name = command[5:]
-                    for item1 in player.inventory:
-                        if heart_name == item1.name.lower():
-                            player.take(item1)
-                            heart_name = item1
-                    player.inventory.remove(heart)
-                    print("%s showed %s." % (player.name, heart.name))
-                    print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
-                    player.location = te_fiti
+                player.keep_fighting()
+                player.showing_heart()
+
+            # command4 = input(">_ ".lower().strip())
+            # if command4 == 'show heart':
+            #         heart_name = command[5:]
+            #         for item1 in player.inventory:
+            #             if heart_name == item1.name.lower():
+            #                 player.take(item1)
+            #                 heart_name = item1
+            #         player.inventory.remove(heart)
+            #         print("%s showed %s." % (player.name, heart.name))
+            #         print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
+            #         player.location = te_fiti
+            # if command4 == 'kill' or 'attack':
+            #     attack_name = command[5:]
+            #     player.fight_taca(player)
+            #     command4 = input(">_ ".lower().strip())
+            #     if command4 == 'show heart':
+            #         heart_name = command[5:]
+            #         for item1 in player.inventory:
+            #             if heart_name == item1.name.lower():
+            #                 player.take(item1)
+            #                 heart_name = item1
+            #         player.inventory.remove(heart)
+            #         print("%s showed %s." % (player.name, heart.name))
+            #         print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
+            #         player.location = te_fiti
         if maui not in player.pep_with_you:
             print("%s can't fight without Maui." % player.name)
 
@@ -983,7 +1006,7 @@ while True:
                                               'now down (to the cellar) and east. There is a rug that was moved. '
 
 # Inventory
-    elif command == 'i' or 'inventory':
+    elif command == 'inventory':
         print("Your Inventory is:")
         for num, item in enumerate(player.inventory):
             print(str(num + 1) + ") " + item.name)
