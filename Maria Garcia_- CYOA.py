@@ -213,6 +213,9 @@ class Boat(Tools):
     def sail(self, person):
         print("%s is sailing on a %s." % (person.name, self.name))
 
+    def get_on(self, person):
+        print("%s gets on the %s." % (person.name, self.name))
+
 
 class Magic(Item):
     def __init__(self, name, value, color):
@@ -314,29 +317,51 @@ class Character(object):
         TACA.attack(maui)
         TACA.attack(maui)
         TACA.attack(maui)
-        print("%s shoots a fire ball at %s's boat and misses." % (taca.name, person.name))
+        print("%s shoots a fire ball at %s's boat and misses." % (TACA.name, person.name))
         print("You are losing! What are you going to do to stop the fight and defeat Taca? Fight or...")
-# Finish Fight Scene
 
-    def keep_fighting(self):
-        print(self.name)
-        command4 = input(">_ ".lower().strip())
-        if command4 == 'kill' or 'attack':
-            player.fight_taca(player)
+    # Finish Fight Scene
 
     def showing_heart(self):
-        print(self.name)
-        command4 = input(">_ ".lower().strip())
-        if command4 == 'show heart':
-            heart_name = command[5:]
-            for item1 in player.inventory:
-                if heart_name == item1.name.lower():
-                    player.take(item1)
-                    heart_name = item1
-            player.inventory.remove(heart)
-            print("%s showed %s." % (player.name, heart.name))
-            print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
-            player.location = te_fiti
+        print("%s" % self.name)
+        heart_name = command1[5:]
+        for item1 in player.inventory:
+            if heart_name == item1.name.lower():
+                player.take(item1)
+                heart_name = item1
+        player.inventory.remove(heart)
+        print("%s showed %s." % (player.name, heart.name))
+        print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
+        player.location = te_fiti
+
+    def fight_coconuts(self):
+        print('%s' % self.name)
+        if heart in player.inventory:
+            if stick in player.inventory:
+                print("You invaded their place. Now you fight.....")
+                print("Say attack to 'attack' or 'no more' to leave.")
+                print("%s attacks with Grandma's Stick." % player.name)
+                player.attack(kakamora)
+                player.attack(kakamora)
+                player.attack(kakamora)
+                player.attack(kakamora)
+                print("%s attacks with Bows and Arrows." % kakamora.name)
+                kakamora.attack(player)
+                kakamora.attack(player)
+                kakamora.attack(player)
+                kakamora.attack(player)
+                print("%s attack but miss." % kakamora.name)
+                print("%s attack but miss." % player.name)
+                command3 = input(">_ ".lower().strip())
+                if command3 == 'attack':
+                    player.fight_coconuts()
+                if command3 == 'no more':
+                    print("They left.")
+                    player.location.description = "There is no one to fight."
+            if stick not in player.inventory:
+                print("You don't have the Stick.")
+        if heart not in player.inventory:
+            print("You don't have the heart so they will not bothered you at all.")
 
     def read(self):
         self.state = "happy"
@@ -357,7 +382,7 @@ class Character(object):
         if self.health <= 0:
             self.alive = False
             print("%s has died." % self.name)
-
+    
     def attack(self, target):
         if self.alive:
             print("%s attacks %s. %s's health is %d. The %s's health is %d." % (self.name, target.name, self.name,
@@ -448,11 +473,11 @@ villagers = Character('Villagers', 'They work and play around the island. \nThey
                       10)
 mom = Character('Mom', 'She supports Moana, but follows what the chief says.\n She is the leaders of the village. '
                        'She will support you.', 100, 'willing')
-dad = Character('Dad', 'He doesn’t want Moana to go to the ocean. \nHe is the chief of the island. '
-                '\nHer dad knows every inch of Chief Mountain.', 100, 'serious and loving')
+dad = Character('Dad', "He doesn’t want Moana to go to the ocean. \nHe is the chief of the island. "
+                       "\nHer dad knows every inch of Chief Mountain.", 100, 'serious and loving')
 ocean = Character('Ocean', 'It is Moana friend. It helps Moana throughout the journey.', 1000, 'caring', 10)
 kakamora = Character('Kakamora', 'Coconuts that are evil. \nThey will kill you unless you give them the heart. '
-                                 'DON’T GIVE THEM THE HEART. \nFIGHT OR BAIL!', 1000, 'angry', 25)
+                                 'DON’T GIVE THEM THE HEART. \nFIGHT OR BAIL!', 100, 'angry', 5)
 shiny = Character('Shiny the Crab', 'He loves gold and is annoying. '
                                     '\nHe will eat you unless you do something to prevent that.', 100, 'greedy', 20)
 monsters = Character('Monsters of the Rilm', 'They will eat you unless you kill them or run away.', 100, 'hungry', 30)
@@ -466,7 +491,7 @@ moana_house = Room("Moana's House", 'ocean_shore', 'chief_stones', 'grandma_hous
                                      'ocean shore, and south is a path.', [moana, malawi, mom], None, [bowl, ball])
 chief_stones = Room("Chief's Stones Mountains", 'moana_house', None, None, None, None, None, 'grandma_house',
                     'palm_trees', None, None, 'You have arrived to a sacred place only for chiefs. '
-                                              '\nThere is only a pile of stones, a chief hat, and paths to the \nnorth '
+                                              '\nThere is only a pile of stones, and paths to the \nnorth '
                                               'and northwest and northeast.', [dad], None, None)
 grandma_house = Room("Grandma's House", None, None, 'villager_homes', 'moana_house', None, None, None, None, None,
                      'chief_stones', 'Grandma lives and there are 3 exits: \nwest, southwest and east. '
@@ -497,13 +522,15 @@ waterfall = Room("Waterfall", None, 'other_ocean_shore', 'hidden_cave', None, No
 hidden_cave = Room("The Hidden Cave", None, None, 'ocean_shore', 'waterfall', None, None, None, None, None, None,
                    'You found the hidden cave. \nThere is only 2 exits: back to the east and to the west.', None,
                    None, [paddle, drum])
-ocean_shore = Room("Ocean Shore", 'into_ocean', 'moana_house', 'fishing_area', None, None, None, None, None, None, None,
+ocean_shore = Room("Ocean Shore", None, 'moana_house', 'fishing_area', None, None, None, None, None, None, None,
                    'The name says it all. \nThis is where the ocean shore is at and where the beach is at.\n'
-                   'There is paths in all main directions: \nnorth, east, south, and west. West is blocked by a door.',
+                   'There is paths in all main directions: \nnorth, east, south, and west. West is blocked by a door. '
+                   '\n'
+                   'You can go Into the Ocean until you find the travelling boats and get on the boat.',
                    None, [ocean, villagers], [shell])
 fishing_area = Room("Fishing Area", None, None, None, None, None, None, None, None, 'villager_homes', None,
                     'This is where there are fishing nets and \nonly one path to the southeast. '
-                    '\nAlso, there are some boats with paddles.', None, [ocean, villagers], [fishing_boats])
+                    '\nAlso, there are some boats with paddles to fish with.', None, [ocean, villagers], None)
 into_ocean = Room("Into the Ocean", 'rilm_of_monster', 'ocean_shore', 'taca', 'island', None, None, 'coconuts', None,
                   None,
                   None, 'You are in the middle of the ocean. \nThere are 5 directions: west, north, east, northeast, '
@@ -586,7 +613,7 @@ def clues():
           "17) type 'clues' to show this again")
 
 
-# clues()     # Redo this
+clues()     # Redo this
 player.location = moana_house
 if player == moana:
     if player.location == moana_house:
@@ -827,8 +854,8 @@ while True:
                 player.inventory.remove(magic_coconut)
             elif heart_found is None:
                 print("Heart not found.")
-            else:
-                print("You don't have Magic Coconut.")
+        if magic_coconut not in player.inventory:
+            print("You don't have Magic Coconut.")
 
 # Find Maui
     elif 'find' in command:
@@ -849,53 +876,62 @@ while True:
             player.location.non_talk_characters.remove(found)
             time.sleep(SLEEP_TIME)
 
-# Fight scene
+# Fight scene with Taca
     elif command == 'fight':
-        print("Remember you attack, TACA attacks more!")
-        time.sleep(1.5)
-        if heart not in player.inventory:
-            print("You don't have the heart to show.")
-        elif hook_maui not in player.inventory:
-            print("You don't have Maui's Hook.")
-        elif necklace not in player.inventory:
-            print("You don't have Grandma's Necklace.")
-        elif maui in player.pep_with_you:
-            while TACA.health != 0:
-                player.fight_taca(player)
-                player.keep_fighting()
-                player.showing_heart()
+        while player.location == taca:
+            print("Remember you attack, TACA attacks more!")
+            if heart not in player.inventory:
+                print("You don't have the heart to show.")
+            elif hook_maui not in player.inventory:
+                print("You don't have Maui's Hook.")
+            elif necklace not in player.inventory:
+                print("You don't have Grandma's Necklace.")
+            if maui in player.pep_with_you:
+                # while True:
+                command1 = input(">_ ".lower().strip())
+                answer_name = 'attack'
+                if answer_name in command1:
+                    player.fight_taca(player)
+                if command1 == 'show heart':
+                    player.showing_heart()
+                    player.location.east = te_fiti
+                    print("You Did It!!!!!!!")
+                    # quit(0)
 
-            # command4 = input(">_ ".lower().strip())
-            # if command4 == 'show heart':
-            #         heart_name = command[5:]
-            #         for item1 in player.inventory:
-            #             if heart_name == item1.name.lower():
-            #                 player.take(item1)
-            #                 heart_name = item1
-            #         player.inventory.remove(heart)
-            #         print("%s showed %s." % (player.name, heart.name))
-            #         print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
-            #         player.location = te_fiti
-            # if command4 == 'kill' or 'attack':
-            #     attack_name = command[5:]
-            #     player.fight_taca(player)
-            #     command4 = input(">_ ".lower().strip())
-            #     if command4 == 'show heart':
-            #         heart_name = command[5:]
-            #         for item1 in player.inventory:
-            #             if heart_name == item1.name.lower():
-            #                 player.take(item1)
-            #                 heart_name = item1
-            #         player.inventory.remove(heart)
-            #         print("%s showed %s." % (player.name, heart.name))
-            #         print("***Narrator***: You showed Taca the heart and Taca turned into Te Fiti. You did it. ")
-            #         player.location = te_fiti
         if maui not in player.pep_with_you:
             print("%s can't fight without Maui." % player.name)
+
+# Fight with Coconuts
+    elif 'fight with them' in command:
+        if player.location == coconuts:
+            if kakamora.health <= 0:
+                print("They can't fight they are dead.")
+            if kakamora.health != 0:
+                player.fight_coconuts()
+
+# Player dead
+    elif player.health <= 0:
+        print("You died.")
+        quit(0)
 
 # Find Te Fift
     elif player.location == te_fiti:
         quit(0)
+
+# Boats
+    elif command == 'get on the boat':
+        if player.location == ocean_shore:
+            if travelling_boats and paddle in player.inventory:
+                travelling_boats.get_on(player)
+                print("You got the boat and have open to the sea area called:")
+                print("Into the Ocean!!!")
+                player.location.north = 'into_ocean'
+                if player.location.north == 'into_ocean':
+                    print("You got the the whole sea to explore.")
+            elif travelling_boats or paddle not in player.inventory:
+                print("You don't have the travelling boats and/or paddle.")
+        if player.location != ocean_shore:
+            print('You need to be at the Ocean Shore to do this.')
 
 # The other ocean shore door opening with key
     elif 'open door' in command:
@@ -956,15 +992,44 @@ while True:
             print("Okay! You lost your chance.")
         if player.inventory != mango and banana and bowl:
             print("You don't have all three items.")
+# Eat
+    elif 'eat mango' in command:
+        mango.eat(player)
+        print("Yummmm!!!!")
+        if mango not in player.inventory:
+            player.location.items.remove(mango)
+        if mango in player.inventory:
+            player.inventory.remove(mango)
 
-# Another way to do inventory
-#     elif command == 'inventory 1':
-#         try:
-#             for item in player.inventory:
-#                 print(item.name)
-#         except KeyError:
-#             print("You don't have that item.")
+    elif 'eat banana' in command:
+        banana.eat(player)
+        print("Delicious")
+        if banana not in player.inventory:
+            player.location.items.remove(banana)
+        if banana in player.inventory:
+            player.inventory.remove(banana)
 
+    elif 'eat coconut' in command:
+        the_coconuts.eat(player)
+        if the_coconuts not in player.inventory:
+            player.location.items.remove(the_coconuts)
+        if the_coconuts in player.inventory:
+            player.inventory.remove(the_coconuts)
+
+    elif 'eat fruitbowl' in command:
+        fruitbowl.eat(player)
+        if fruitbowl not in player.inventory:
+            player.location.items.remove(fruitbowl)
+        if fruitbowl in player.inventory:
+            player.inventory.remove(fruitbowl)
+
+# Drink
+    elif 'drink water' in command:
+        if water_bottle in player.inventory:
+            print("You drank the water.")
+            player.inventory.remove(water_bottle)
+        if water_bottle not in player.inventory:
+            print("You don't have the water bottle.")
 # Shell
     elif command == 'put shell in hole':
         if player.location == maui_hook:
