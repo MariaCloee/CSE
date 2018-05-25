@@ -610,10 +610,10 @@ def clues():
           "14) type move[item name] to move things\n"
           "15) type 'put' or 'leave' to put and drop things to and from your sack. \n"
           "16) type 'climb[item name]' to climb things.\n"
-          "17) type 'clues' to show this again")
+          "17) type 'help' to show this again")
 
 
-clues()     # Redo this
+# clues()     # Redo this
 player.location = moana_house
 if player == moana:
     if player.location == moana_house:
@@ -857,6 +857,10 @@ while True:
         if magic_coconut not in player.inventory:
             print("You don't have Magic Coconut.")
 
+# Help
+    elif 'help' in command:
+        clues()
+
 # Find Maui
     elif 'find' in command:
         find_name = command[5:]
@@ -969,7 +973,7 @@ while True:
     elif command == 'climb back down':
         player.location = palm_trees
 # Clues
-    elif 'clues' in command:
+    elif 'help' in command:
         clues()
 
 # Put Fruit in Bowl
