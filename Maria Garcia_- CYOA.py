@@ -382,7 +382,7 @@ class Character(object):
         if self.health <= 0:
             self.alive = False
             print("%s has died." % self.name)
-    
+
     def attack(self, target):
         if self.alive:
             print("%s attacks %s. %s's health is %d. The %s's health is %d." % (self.name, target.name, self.name,
@@ -1028,7 +1028,7 @@ while True:
         if water_bottle in player.inventory:
             print("You drank the water.")
             player.inventory.remove(water_bottle)
-        if water_bottle not in player.inventory:
+        elif water_bottle not in player.inventory:
             print("You don't have the water bottle.")
 # Shell
     elif command == 'put shell in hole':
